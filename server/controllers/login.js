@@ -1,5 +1,6 @@
+const aaa = require('../models/user-Info')
 
-const aa = {
+const userLogin = {
     async login(ctx,next){
         const requestBody = ctx.request.query;
         // logger.info(`enter getInterfaceInfo ->${JSON.stringify(requestBody)}`)
@@ -10,4 +11,4 @@ const aa = {
     },
 }
 
-module.exports = aa
+module.exports = userLogin

@@ -13,11 +13,13 @@ export default function $axios(options) {
             baseURL: config.baseURL,
             headers: {},
             transformResponse: [function (data) {
+                
             }]
         }) 
 
         // request 拦截器
         instance.interceptors.request.use(
+            // 请求拦截器 在请求开始前做一些验证
             config => {
                 let token = Cookies.get('markToken')
                 // 1. 请求开始的时候可以结合 vuex 开启全屏 loading 动画
@@ -25,25 +27,22 @@ export default function $axios(options) {
                 // console.log('准备发送请求...')
                 // 2. 带上token
                 if (token) {
-                config.headers.accessToken = token
+                    config.headers.accessToken = token
                 } else {
-                // 重定向到登录页面
-                router.push('/')
+                    // 重定向到登录页面
+                    router.push('/')
                 }
                 // 3. 根据请求方法，序列化传来的参数，根据后端需求是否序列化
                 if (config.method === 'post') {
-                if (config.data.__proto__ === FormData.prototype
-                    || config.url.endsWith('path')
-                    || config.url.endsWith('mark')
-                    || config.url.endsWith('patchs')
-                ) {
-                } else {
-                    config.data = qs.stringify(config.data)
-                }
+                    if (config.data.__proto__ === FormData.prototype || config.url.endsWith('path') || config.url.endsWith('mark') || config.url.endsWith('patchs')) {
+
+                    } else {
+                        config.data = qs.stringify(config.data)
+                    }
                 }
                 return config
             },
-
+            // 请求发生错误时需要做些什么
             error => {
                 // 请求错误时
                 console.log('request:', error)
@@ -70,33 +69,37 @@ export default function $axios(options) {
         instance.interceptors.response.use(
             response => {
                 let data;
+                console.log('正确请求')
                 // IE9时response.data是undefined，因此需要使用response.request.responseText(Stringify后的字符串)
+                console.log(JSON.stringify(response))
+                console.log(response.data)
                 if (response.data == undefined) {
-                    data = JSON.parse(response.request.responseText)
+                    console.log(111111)
+                    data = response.request.responseText
                 } else {
                     data = response.data
                 }
-
+                console.log(data)
                 // 根据返回的code值来做不同的处理
                 switch (data.rc) {
                     case 1:
                         console.log(data.desc)
                         break;
                     case 0:
-                        store.commit('changeState')
-                        // console.log('登录成功')
+                        // store.commit('changeState')
+                        console.log('登录成功')
                     default:
+                        console.log('默认值')
                 }
                 // 若不是正确的返回code，且已经登录，就抛出错误
                 // const err = new Error(data.desc)
                 // err.data = data
                 // err.response = response
                 // throw err
-
-
                 return data
             },
             err => {
+                console.log('错误请求')
                 if (err && err.response) {
                     switch (err.response.status) {
                         case 400:
