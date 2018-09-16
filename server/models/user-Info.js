@@ -11,6 +11,26 @@ let userSchema = new Schema({
     }
 })
 
-let userModel = mongoose.model('user', userSchema)
+let userModel = mongoose.model('userInfo', userSchema)
 
-module.exports = userModel
+/**
+ * 通过username查询
+ * @param username
+ * @param pwd 包含密码字段
+ * @returns {Promise.<Query>}
+ */
+async function queryByUserName(username, pwd = false) {
+    let query = this.findOne({ username })
+    if (!pwd) {
+        query = query.select('-password')
+    }
+    return query.exec()
+}
+
+
+// module.exports = userModel
+
+module.exports = {
+    userModel,
+    queryByUserName,
+}
