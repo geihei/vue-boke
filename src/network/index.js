@@ -1,5 +1,7 @@
 // 导入所有接口
 import apiList from './interface'
+import qs from 'qs'
+
 const install = Vue => {
     if (install.installed) return;
     install.installed = true;
@@ -12,6 +14,8 @@ const install = Vue => {
             }
         }
     })
+
+    Vue.prototype.$qs = qs
 }
 
 export default install

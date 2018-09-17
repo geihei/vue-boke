@@ -69,28 +69,28 @@ export default function $axios(options) {
         instance.interceptors.response.use(
             response => {
                 let data;
-                console.log('正确请求')
+                // console.log('正确请求')
                 // IE9时response.data是undefined，因此需要使用response.request.responseText(Stringify后的字符串)
-                console.log(JSON.stringify(response))
-                console.log(response.data)
+                // console.log(JSON.stringify(response))
+                // console.log(response.data)
                 if (response.data == undefined) {
-                    console.log(111111)
+                    // console.log(111111)
                     data = response.request.responseText
                 } else {
                     data = response.data
                 }
                 console.log(data)
                 // 根据返回的code值来做不同的处理
-                switch (data.rc) {
-                    case 1:
-                        console.log(data.desc)
-                        break;
-                    case 0:
-                        // store.commit('changeState')
-                        console.log('登录成功')
-                    default:
-                        console.log('默认值')
-                }
+                // switch (data.rc) {
+                //     case 1:
+                //         console.log(data.desc)
+                //         break;
+                //     case 0:
+                //         // store.commit('changeState')
+                //         console.log('登录成功')
+                //     default:
+                //         console.log('默认值')
+                // }
                 // 若不是正确的返回code，且已经登录，就抛出错误
                 // const err = new Error(data.desc)
                 // err.data = data

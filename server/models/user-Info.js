@@ -11,19 +11,14 @@ let userSchema = new Schema({
     }
 })
 
-let userModel = mongoose.model('userInfo', userSchema)
+let userModel = mongoose.model('user', userSchema, 'user')
 
-/**
- * 通过username查询
- * @param username
- * @param pwd 包含密码字段
- * @returns {Promise.<Query>}
- */
 async function queryByUserName(username, pwd = false) {
-    let query = this.findOne({ username })
-    if (!pwd) {
-        query = query.select('-password')
-    }
+    let query = userModel.findOne({ 'username': username })
+    // if (!pwd) {
+    //     console.log('--------------')
+    //     query = query.select('-password')
+    // }
     return query.exec()
 }
 

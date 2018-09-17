@@ -25,8 +25,13 @@ export default {
         }
     },
     created() {
-        this.$api.login('id').then(res => {
-            console.log('success')
+        let postData = {
+            username: 'admin',
+            password: 'admin'
+        }
+        this.$api.login(postData).then(res => {
+            res = JSON.parse(res)
+            alert(res.message)
         }).catch(error => {
             console.log('fail')
         })

@@ -1,14 +1,18 @@
-const authenticate = require('../services/user-Info')
+const userMethods = require('../services/user-Info')
 
 const userLogin = {
     async login(ctx,next){
-        const requestBody = ctx.request.query;
-        let data = await authenticate
-        console.log(JSON.stringify(data))
-        // logger.info(`enter getInterfaceInfo ->${JSON.stringify(requestBody)}`)
-        // const data = await InterfaceService.getInterfaceInfo(requestBody);
-        console.log('恭喜成功打通接口')
-        ctx.body = '1';
+        const requestBody = ctx.request.body;
+        let data = await userMethods.authenticate(requestBody.username, requestBody.password)
+        if(!data) {
+            ctx.e403({ code: 403, message: '邮箱或密码错误' })
+        }else {
+            ctx.body = {
+                code: 0,
+                message: '登录成功',
+                data,
+            }
+        }
         await next()    
     },
 }
