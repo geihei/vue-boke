@@ -1,8 +1,8 @@
 <template>
     <section class="container">
         <div class="login_container">
-            <el-input placeholder="请输入用户名" clearable v-model="username"></el-input>
-            <el-input placeholder="请输入密码" clearable v-model="password"></el-input>
+            <el-input placeholder="请输入用户名" clearable v-model="loginForm.username"></el-input>
+            <el-input placeholder="请输入密码" clearable v-model="loginForm.password" @keyup.enter.native="login"></el-input>
             <el-button @click="login">登录</el-button>
         </div>
         <canvas id="canvas" ref="canvas"></canvas>
@@ -14,30 +14,45 @@ import start from '../utils/direvtive'
 export default {
     data() {
         return {
-            username: '',
-            password: '',
+            loginForm: {
+                username: '',
+                password: '',
+            },
         }
     },
     created() {
         
     },
     mounted() {
+        // 初始化canvas
         const canvas = document.getElementById('canvas')
         const ctx = canvas.getContext('2d')
         start(canvas, ctx)
     },
     methods: {
+        // 登录
         login() {
-            this.$api.login({
-                username: this.username,
-                password: this.password
-            }).then(res => {
-                res = JSON.parse(res)
-                alert(res.message)
-                location.href = '#'
-            }).catch(error => {
-                alert('登录失败')
-            })
+            if (!this.loginForm.username || !this.loginForm.password) {
+                this.$message.error('用户名或者密码不能为空')
+            } else {
+                console.log(this.loginForm)
+                this.$api.login(this.loginForm).then(res => {
+                    res = JSON.parse(res)
+                    if (res.code == 0) {
+                        alert(1)
+                        this.$message({
+                            message: res.message,
+                            type: 'success'
+                        })
+                        this.$router.push({ path: 'home' })
+                    } else {
+                        this.$message.error('登录失败')
+                    }
+                }).catch(error => {
+                    alert(2)
+                    this.$message.error('登录失败')
+                })
+            }
         }
     }
 }
