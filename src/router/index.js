@@ -24,3 +24,32 @@ export default new Router({
         }
     ]
 })
+
+// 此处应该分为两部分路由
+// 一部分是不需要登录验证的 如login 404 等页面
+// 另一部分是需要验证的 如home 等页面
+// export const constantRouterMap = [
+//     {
+//         path: '/',
+//         component: Login
+//     },
+//     {
+//         path: '/login',
+//         name: 'login',
+//         component: Login
+//     },
+// ]
+
+// export default new Router ({
+//     // mode: 'history', // require service support
+//     // scrollBehavior: () => ({ y: 0 }),
+//     routes: constantRouterMap
+// }) 
+
+// export const asyncRouterMap = [
+//     {
+//         path: '/home',
+//         name: 'home',
+//         component: Home
+//     }
+// ]

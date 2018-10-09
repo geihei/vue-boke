@@ -14,11 +14,11 @@ const userLogin = {
                 id: data.id
             }
             const token = jwt.sign(userToken, secret, {expiresIn: '24h'})
+            data.token = token
             ctx.body = {
                 code: 0,
                 message: '登录成功',
-                data,
-                token
+                data
             }
         }
         await next()    

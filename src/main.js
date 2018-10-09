@@ -7,6 +7,7 @@ import api from './network/index'
 import ElementUI from 'element-ui'
 import fontSize from './utils/fontSize'
 import 'element-ui/lib/theme-chalk/index.css'
+import './permission'
 
 Vue.config.productionTip = false
 
