@@ -14,20 +14,24 @@ const bodyParser = require('koa-bodyparser')
 const cors = require("koa2-cors"); 
 // const config = require('./../config')
 const routers = require('./routers/index')
+const jwt = require('jsonwebtoken')
+const jwtKoa = require('koa-jwt')
+const util = require('util')
+const verify = util.promisify(jwt.verify)
+const secret = 'my jwt secret'
 
 const app = new Koa()
 
-app.use( 
-  cors({
-    origin: function(ctx) {
-        console.log(ctx.url)
-        return "http://localhost:8080";
-    },
-    exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
-    maxAge: 3600,
-    allowMethods: ['GET', 'PUT', 'POST'],
-    allowHeaders: ["Content-Type", "Authorization", "Accept"]
-  })
+app.use(
+    cors({
+        origin: function(ctx) {
+            return "http://localhost:8080";
+        },
+        exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
+        maxAge: 3600,
+        allowMethods: ['GET', 'PUT', 'POST'],
+        allowHeaders: ["Content-Type", "Authorization", "Accept"]
+    })
 );
 
 // koa2-cors 源码 即上面代码的实现原理
@@ -72,7 +76,10 @@ app.use(bodyParser())
 // 初始化路由中间件
 app
     .use(routers.routes())
-    .use(routers.allowedMethods());
+    .use(routers.allowedMethods())
+    .use(jwtKoa({secret}).unless({
+        path: [/^\/api\/login/] //数组中的路径不需要通过jwt验证
+    }))
 
 // session存储配置
 // const sessionMysqlConfig= {

@@ -8,18 +8,18 @@
                 <el-dropdown-item>删除</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
-        <span>王小虎</span>
+        <span>{{username}}</span>
     </el-header>
 </template>
 <script>
 export default {
     data() {
         return {
-
+            username: ''
         }
     },
     created() {
-
+        this.username = window.localStorage.username
     },
 }
 </script>

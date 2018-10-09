@@ -1,16 +1,24 @@
 const userMethods = require('../services/user-Info')
+const jwt = require('jsonwebtoken')
+const secret = 'my boke jwt'
 
 const userLogin = {
     async login(ctx,next){
         const requestBody = ctx.request.body;
         let data = await userMethods.authenticate(requestBody.username, requestBody.password)
-        if(!data) {
+        if (!data) {
             ctx.e403({ code: 403, message: '邮箱或密码错误' })
-        }else {
+        } else {
+            const userToken = {
+                name: data.username,
+                id: data.id
+            }
+            const token = jwt.sign(userToken, secret, {expiresIn: '24h'})
             ctx.body = {
                 code: 0,
                 message: '登录成功',
                 data,
+                token
             }
         }
         await next()    

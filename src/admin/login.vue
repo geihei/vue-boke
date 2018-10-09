@@ -35,21 +35,28 @@ export default {
             if (!this.loginForm.username || !this.loginForm.password) {
                 this.$message.error('用户名或者密码不能为空')
             } else {
-                console.log(this.loginForm)
                 this.$api.login(this.loginForm).then(res => {
                     res = JSON.parse(res)
                     if (res.code == 0) {
-                        alert(1)
                         this.$message({
                             message: res.message,
                             type: 'success'
                         })
+                        if (!window.localStorage) {
+                            this.$message({
+                                message: '浏览器不支持localStorage'
+                            })
+                        } else {
+                            const storage = window.localStorage
+                            storage.username = res.data.username
+                            storage.token = res.data.token
+                            storage.id = res.data._id
+                        }
                         this.$router.push({ path: 'home' })
                     } else {
                         this.$message.error('登录失败')
                     }
                 }).catch(error => {
-                    alert(2)
                     this.$message.error('登录失败')
                 })
             }
