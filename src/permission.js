@@ -14,8 +14,8 @@ const whiteList = ['/login']
 router.beforeEach((to, from, next) => {
     if (window.localStorage.token) {
         // token存在
-        console.log(to.path)
         if (to.path === '/login') {
+            // 避免login 跳转到 login 的无限循环问题
             next('/home')
         } else {
             next()

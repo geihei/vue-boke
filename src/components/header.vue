@@ -1,11 +1,9 @@
 <template>
-    <el-header style="text-align: right; font-size: 12px">
+    <el-header class="header">
         <el-dropdown>
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
+            <i class="el-icon-setting"></i>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>查看</el-dropdown-item>
-                <el-dropdown-item>新增</el-dropdown-item>
-                <el-dropdown-item>删除</el-dropdown-item>
+                <el-dropdown-item @click.native="Logout">登出</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
         <span>{{username}}</span>
@@ -21,8 +19,22 @@ export default {
     created() {
         this.username = window.localStorage.username
     },
+    methods: {
+        Logout() {
+            window.localStorage.id = ''
+            window.localStorage.username = ''
+            window.localStorage.token = ''
+            this.$router.push({ path: 'login' })
+        },
+    }
 }
 </script>
 <style lang="less" scoped>
-
+.header{
+    text-align: right;
+    font-size: 12px;
+}
+.el-icon-setting {
+    margin-right: 15px;
+}
 </style>
