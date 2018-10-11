@@ -21,9 +21,7 @@ export default {
     },
     methods: {
         Logout() {
-            this.$store.state.userId = ''
-            this.$store.state.username = ''
-            this.$store.state.token = ''
+            this.$store.commit('logout')
             this.$router.push({ path: 'login' })
         },
     }

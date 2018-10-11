@@ -18,7 +18,7 @@ const jwt = require('jsonwebtoken')
 const jwtKoa = require('koa-jwt')
 const util = require('util')
 const verify = util.promisify(jwt.verify)
-const secret = 'my jwt secret'
+const secret = 'my boke jwt'
 
 const app = new Koa()
 
@@ -68,6 +68,18 @@ app.use(
 //     ctx.set("Access-Control-Expose-Headers", "myData");
 //     await next();
 // })
+
+// 错误处理
+app.use((ctx, next) => {
+    return next().catch((err) => {
+        if(err.status === 401){
+            ctx.status = 401;
+            ctx.body = 'Protected resource, use Authorization header to get access\n';
+        }else{
+            throw err;
+        }
+    })
+})
 
 // 配置ctx.body解析中间件
 // body中间件必须在路由中间件前面 否则无法解析body

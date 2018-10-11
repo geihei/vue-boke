@@ -1,9 +1,7 @@
 /**
  * 整合所有子路由
  */
-
 const router = require('koa-router')()
-
 const home = require('./home')
 const api = require('./api')
 const admin = require('./admin')

@@ -1,3 +1,5 @@
+import checktoken from '../middleware/checktoken'
+
 /**
  * restful api 子路由
  */

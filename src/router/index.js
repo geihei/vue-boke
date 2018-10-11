@@ -5,25 +5,34 @@ import Home from '@/admin/home'
 
 Vue.use(Router)
 
-export default new Router({
-    routes: [
-        {
-            path: '/',
-            name: 'login',
-            component: Login
-        },
-        {
-            path: '/login',
-            name: 'Login',
-            component: Login
-        },
-        {
-            path: '/home',
-            name: 'home',
-            component: Home
-        }
-    ]
+const routes = [
+    {
+        path: '/',
+        name: 'login',
+        component: Login
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        path: '/home',
+        name: 'home',
+        component: Home
+    }
+]
+
+const router  = new Router({
+    routes
 })
+
+// 页面刷新时，重新赋值token
+if (window.localStorage.getItem('token')) {
+    store.commit('login', window.localStorage.getItem('token'))
+}
+
+export default router
 
 // 此处应该分为两部分路由
 // 一部分是不需要登录验证的 如login 404 等页面

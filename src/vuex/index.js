@@ -8,6 +8,7 @@ export default new Vuex.Store({
         token: '',
         username: '',
         userId: '',
+        currentTime: '',
     },
     getters: {
         
@@ -19,6 +20,13 @@ export default new Vuex.Store({
             state.username = data.username
             state.userId = data._id
         },
+        logout: (state) => {
+            localStorage.token = ''
+            state.token = ''
+            state.username = ''
+            state.userId = ''
+            state.currentTime = ''
+        }
     },
     actions: {
         
