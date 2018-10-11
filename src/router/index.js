@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../vuex'
 import Login from '@/admin/login'
 import Home from '@/admin/home'
 
@@ -23,14 +24,15 @@ const routes = [
     }
 ]
 
+// 页面刷新时，重新赋值token
+if (window.localStorage.token) {
+    console.log(window.localStorage.token)
+    store.commit('setToken', window.localStorage.token)
+}
+
 const router  = new Router({
     routes
 })
-
-// 页面刷新时，重新赋值token
-if (window.localStorage.getItem('token')) {
-    store.commit('login', window.localStorage.getItem('token'))
-}
 
 export default router
 

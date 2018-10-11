@@ -26,7 +26,7 @@ export default {
         }
     },
     created() {
-
+        console.log(this.$store.state.token)
     },
     components: {
         leftBar,

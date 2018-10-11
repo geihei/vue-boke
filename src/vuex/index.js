@@ -16,16 +16,22 @@ export default new Vuex.Store({
     mutations: {
         login: (state, data) => {
             localStorage.token = data.token
+            localStorage.username = data.username
             state.token = data.token
             state.username = data.username
             state.userId = data._id
         },
         logout: (state) => {
             localStorage.token = ''
+            localStorage.username = ''
             state.token = ''
             state.username = ''
             state.userId = ''
             state.currentTime = ''
+        },
+        setToken: (state) => {
+            state.token = localStorage.token
+            state.username = localStorage.username
         }
     },
     actions: {

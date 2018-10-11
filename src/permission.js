@@ -13,7 +13,6 @@ function hasPermission(roles, permissionRoles) {
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
-    console.log(store.state)
     if (store.state.token) {
         // token存在
         if (to.path === '/login' || to.path === '/') {

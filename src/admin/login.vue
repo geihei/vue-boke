@@ -45,6 +45,7 @@ export default {
                         // 添加当前时间 用于验证token是否过期
                         this.$store.state.currentTime = new Date().getTime()
                         this.$store.commit('login', res.data)
+                        console.log(this.$store.state.token)
                         this.$router.push({ path: 'home' })
                     } else {
                         this.$message.error('登录失败')
