@@ -1,8 +1,9 @@
-import axios from 'axios';
-import config from './config';
-import qs from 'qs';
-import Cookies from "js-cookie";
+import axios from 'axios'
+import config from './config'
+import qs from 'qs'
+import Cookies from "js-cookie"
 import router from '@/router'
+import store from '../vuex'
 
 // 使用vuex做全局loading时使用
 // import store from '@/store'
@@ -21,7 +22,7 @@ export default function $axios(options) {
         instance.interceptors.request.use(
             // 请求拦截器 在请求开始前做一些验证
             config => {
-                let token = Cookies.get('markToken')
+                let token = store.state.token
                 // 1. 请求开始的时候可以结合 vuex 开启全屏 loading 动画
                 // console.log(store.state.loading)
                 // console.log('准备发送请求...')
@@ -30,7 +31,7 @@ export default function $axios(options) {
                     config.headers.accessToken = token
                 } else {
                     // 重定向到登录页面
-                    router.push('/')
+                    router.push('/login')
                 }
                 // 3. 根据请求方法，序列化传来的参数，根据后端需求是否序列化
                 if (config.method === 'post') {
@@ -69,12 +70,8 @@ export default function $axios(options) {
         instance.interceptors.response.use(
             response => {
                 let data;
-                // console.log('正确请求')
                 // IE9时response.data是undefined，因此需要使用response.request.responseText(Stringify后的字符串)
-                // console.log(JSON.stringify(response))
-                // console.log(response.data)
                 if (response.data == undefined) {
-                    // console.log(111111)
                     data = response.request.responseText
                 } else {
                     data = response.data

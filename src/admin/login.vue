@@ -42,16 +42,7 @@ export default {
                             message: res.message,
                             type: 'success'
                         })
-                        if (!window.localStorage) {
-                            this.$message({
-                                message: '浏览器不支持localStorage'
-                            })
-                        } else {
-                            const storage = window.localStorage
-                            storage.username = res.data.username
-                            storage.token = res.data.token
-                            storage.id = res.data._id
-                        }
+                        this.$store.commit('login', res.data)
                         this.$router.push({ path: 'home' })
                     } else {
                         this.$message.error('登录失败')

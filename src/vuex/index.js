@@ -3,19 +3,24 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-export function createStore() {
-    return new Vuex.Store({
-        state: {
-            
+export default new Vuex.Store({
+    state: {
+        token: '',
+        username: '',
+        userId: '',
+    },
+    getters: {
+        
+    },
+    mutations: {
+        login: (state, data) => {
+            localStorage.token = data.token
+            state.token = data.token
+            state.username = data.username
+            state.userId = data._id
         },
-        getters: {
-            
-        },
-        mutations: {
-            
-        },
-        actions: {
-            
-        },
-    });
-}
+    },
+    actions: {
+        
+    },
+})

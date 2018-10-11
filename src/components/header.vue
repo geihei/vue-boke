@@ -17,13 +17,13 @@ export default {
         }
     },
     created() {
-        this.username = window.localStorage.username
+        this.username = this.$store.state.username
     },
     methods: {
         Logout() {
-            window.localStorage.id = ''
-            window.localStorage.username = ''
-            window.localStorage.token = ''
+            this.$store.state.userId = ''
+            this.$store.state.username = ''
+            this.$store.state.token = ''
             this.$router.push({ path: 'login' })
         },
     }

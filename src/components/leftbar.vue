@@ -2,7 +2,7 @@
      <el-aside class="el_side">
         <el-menu :default-openeds="[]">
         <el-submenu index="1">
-            <template slot="title"><i class="el-icon-message"></i>导航一</template>
+            <template slot="title"><i class="el-icon-message"></i>文章列表</template>
             <el-menu-item-group>
                 <template slot="title">分组一</template>
                 <el-menu-item index="1-1">选项1</el-menu-item>
@@ -17,7 +17,7 @@
             </el-submenu>
         </el-submenu>
         <el-submenu index="2">
-            <template slot="title"><i class="el-icon-menu"></i>导航二</template>
+            <template slot="title"><i class="el-icon-menu"></i>评论</template>
             <el-menu-item-group>
                 <template slot="title">分组一</template>
                 <el-menu-item index="2-1">选项1</el-menu-item>
@@ -32,7 +32,7 @@
             </el-submenu>
         </el-submenu>
         <el-submenu index="3">
-            <template slot="title"><i class="el-icon-setting"></i>导航三</template>
+            <template slot="title"><i class="el-icon-setting"></i>用户列表</template>
             <el-menu-item-group>
                 <template slot="title">分组一</template>
                 <el-menu-item index="3-1">选项1</el-menu-item>

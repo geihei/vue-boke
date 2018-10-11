@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import store from './vuex'
 import router from './router'
 import api from './network/index'
 import ElementUI from 'element-ui'
@@ -21,6 +22,8 @@ Vue.use(api)
 new Vue({
     el: '#app',
     router,
+    store,
     components: { App },
     template: '<App/>'
 })
+
