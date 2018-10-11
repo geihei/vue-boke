@@ -24,9 +24,8 @@ const routes = [
     }
 ]
 
-// 页面刷新时，重新赋值token
+// 页面刷新时 重新赋值token 防止刷新是vuex中状态丢失
 if (window.localStorage.token) {
-    console.log(window.localStorage.token)
     store.commit('setToken', window.localStorage.token)
 }
 
