@@ -29,7 +29,7 @@ export default function $axios(options) {
                 // 2. 带上token
                 if (token) {
                     // config.headers.accessToken = token
-                    config.headers.Authorization = `token ${store.state.token}`
+                    config.headers.Authorization = `Bearer ${store.state.token}`
                 } else {
                     // 重定向到登录页面
                     router.push('/login')

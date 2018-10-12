@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import store from '../vuex'
 import Login from '@/admin/login'
 import Home from '@/admin/home'
+import Html from '@/admin/html'
 
 Vue.use(Router)
 
@@ -20,7 +21,14 @@ const routes = [
     {
         path: '/home',
         name: 'home',
-        component: Home
+        component: Home,
+        children: [
+            {
+                path: '/html',
+                name: 'Html',
+                component: Html
+            }
+        ]
     }
 ]
 

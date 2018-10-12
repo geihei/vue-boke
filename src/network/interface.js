@@ -35,10 +35,18 @@ export const login = data => {
     })
 }
 
+export const getAllTableData = data => {
+    return axios({
+        url: '/getAllTableData',
+        method: 'get'
+    })
+}
+
 // 默认全部导出
 export default {
     query,
     list,
     upload,
-    login
+    login,
+    getAllTableData
 }
