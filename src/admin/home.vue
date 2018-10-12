@@ -4,15 +4,9 @@
         <el-container class="el_container">
             <common-header></common-header>
             <el-main>
-                <transition>
-                    <keep-alive>
-                        <el-table :data="tableData" :default-sort = "{prop: 'time'}">
-                            <el-table-column prop="title" label="文章标题"></el-table-column>
-                            <el-table-column prop="time" label="创建时间" align="center"></el-table-column>
-                            <el-table-column prop="author" label="作者" align="center"></el-table-column>
-                        </el-table>
-                    </keep-alive>
-                </transition>
+                <keep-alive>
+                    <list-table></list-table>
+                </keep-alive>
             </el-main>
         </el-container>
     </el-container>
@@ -20,6 +14,7 @@
 <script>
 import leftBar from '../components/leftbar.vue'
 import commonHeader from '../components/header.vue'
+import listTable from '../components/list.vue'
 export default {
     data() {
         return {
@@ -43,6 +38,7 @@ export default {
     components: {
         leftBar,
         commonHeader,
+        listTable
     }
 }
 </script>

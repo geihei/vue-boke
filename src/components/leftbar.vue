@@ -7,9 +7,15 @@
                     <el-menu-item index="1-1">全部文章</el-menu-item>
                     <el-submenu index="1-2">
                         <template slot="title">文章分类</template>
-                        <el-menu-item index="1-2-1"><router-link to="html">html</router-link></el-menu-item>
-                        <el-menu-item index="1-2-2">javascript</el-menu-item>
-                        <el-menu-item index="1-2-3">css</el-menu-item>
+                        <router-link :to="'/home/html'">
+                            <el-menu-item index="1-2-1">html</el-menu-item>
+                        </router-link>
+                        <router-link :to="'/home/javascript'">
+                            <el-menu-item index="1-2-2">javascript</el-menu-item>
+                        </router-link>
+                        <router-link :to="'/home/css'">
+                            <el-menu-item index="1-2-3">css</el-menu-item>
+                        </router-link>
                     </el-submenu>
                 </el-menu-item-group>
             </el-submenu>
