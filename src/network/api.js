@@ -77,7 +77,7 @@ export default function $axios(options) {
                 } else {
                     data = response.data
                 }
-                console.log(data)
+                // console.log(data)
                 // 根据返回的code值来做不同的处理
                 // switch (data.rc) {
                 //     case 1:

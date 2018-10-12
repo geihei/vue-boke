@@ -9,7 +9,7 @@ const table = {
         } else {
             ctx.body = {
                 code: 0,
-                message: '登录成功',
+                message: '获取tabledata成功',
                 data
             }
         }

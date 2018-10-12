@@ -3,7 +3,8 @@ const Schema = mongoose.Schema
 // 数据增删改查
 let tableSchema = new Schema({
     title: {
-        type: String
+        type: String,
+        unique: true
     },
     time: {
         type: String

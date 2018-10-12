@@ -1,6 +1,6 @@
 <template>
      <el-aside class="el_side">
-        <el-menu :default-openeds="[]">
+        <el-menu :default-openeds="['1']" :default-active="'1-1'">
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-message"></i>文章列表</template>
                 <el-menu-item-group>

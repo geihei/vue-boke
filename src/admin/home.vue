@@ -6,10 +6,10 @@
             <el-main>
                 <transition>
                     <keep-alive>
-                        <el-table :data="tableData">
+                        <el-table :data="tableData" :default-sort = "{prop: 'time'}">
                             <el-table-column prop="title" label="文章标题"></el-table-column>
-                            <el-table-column prop="time" label="创建时间" align="center" sortable="true"></el-table-column>
-                            <el-table-column prop="author" label="作者" align="center" sortable="true"></el-table-column>
+                            <el-table-column prop="time" label="创建时间" align="center"></el-table-column>
+                            <el-table-column prop="author" label="作者" align="center"></el-table-column>
                         </el-table>
                     </keep-alive>
                 </transition>
@@ -23,13 +23,7 @@ import commonHeader from '../components/header.vue'
 export default {
     data() {
         return {
-            tableData: [
-                {title: 'title1', time: '2018-10-11', author: 'geihei'},
-                {title: 'title1', time: '2018-10-12', author: 'geihei'},
-                {title: 'title1', time: '2018-10-13', author: 'geihei'},
-                {title: 'title1', time: '2018-10-14', author: 'geihei'},
-                {title: 'title1', time: '2018-10-15', author: 'geihei'},
-            ]
+            tableData: []
         }
     },
     created() {
@@ -38,10 +32,11 @@ export default {
     },
     methods: {
         getAllTableData() {
-            this.$api.getAllTableData(res => {
+            this.$api.getAllTableData().then(res => {
                 res = JSON.parse(res)
-                console.log(res)
-                this.tableData = res
+                if(res.code == 0){
+                    this.tableData = res.data
+                }
             })
         }
     },
