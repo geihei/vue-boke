@@ -4,7 +4,9 @@
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-message"></i>文章列表</template>
                 <el-menu-item-group>
-                    <el-menu-item index="1-1">全部文章</el-menu-item>
+                    <router-link :to="'/home'">
+                        <el-menu-item index="1-1">全部文章</el-menu-item>
+                    </router-link>
                     <el-submenu index="1-2">
                         <template slot="title">文章分类</template>
                         <router-link :to="'/home/html'">

@@ -21,20 +21,20 @@ export default {
             tableData: []
         }
     },
-    created() {
-        // 请求数据
-        this.getAllTableData()
-    },
-    methods: {
-        getAllTableData() {
-            this.$api.getAllTableData().then(res => {
-                res = JSON.parse(res)
-                if(res.code == 0){
-                    this.tableData = res.data
-                }
-            })
-        }
-    },
+    // created() {
+    //     // 请求数据
+    //     this.getAllTableData()
+    // },
+    // methods: {
+    //     getAllTableData() {
+    //         this.$api.getAllTableData().then(res => {
+    //             res = JSON.parse(res)
+    //             if(res.code == 0){
+    //                 this.tableData = res.data
+    //             }
+    //         })
+    //     }
+    // },
     components: {
         leftBar,
         commonHeader,

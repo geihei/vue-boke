@@ -11,6 +11,10 @@ export default {
         data: Array,
         type: String
     },
+    watch: {
+        // 如果路由有变化，会再次执行该方法
+        "$route": "getAllTableData"
+    },
     data() {
         return {
             tableData: this.data
@@ -22,7 +26,9 @@ export default {
     },
     methods: {
         getAllTableData() {
-            this.$api.getAllTableData().then(res => {
+            // 拿路由参数 根据参数获取不同table
+            const urlParam = this.$route.params
+            this.$api.getAllTableData(urlParam).then(res => {
                 res = JSON.parse(res)
                 if(res.code == 0){
                     this.tableData = res.data

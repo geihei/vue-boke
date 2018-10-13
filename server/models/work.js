@@ -11,6 +11,9 @@ let tableSchema = new Schema({
     },
     author: {
         type: String
+    },
+    type: {
+        type: String
     }
 })
 
