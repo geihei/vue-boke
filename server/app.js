@@ -7,8 +7,8 @@ const routers = require('./routers/index')
 const jwt = require('jsonwebtoken')
 const jwtKoa = require('koa-jwt')
 const util = require('util')
-const verify = util.promisify(jwt.verify)
-const secret = 'my boke jwt'
+// const verify = util.promisify(jwt.verify)
+const secret = require('./middleware/token.config')
 
 const app = new Koa()
 
@@ -61,17 +61,16 @@ app.use(
 // })
 
 // 错误处理
-// app.use((ctx, next) => {
-//     return next().catch((err) => {
-//         if(err.status === 401){
-//             ctx.status = 401;
-//             ctx.body = 'Protected resource, use Authorization header to get access\n';
-//         }else{
-//             throw err;
-//         }
-//     })
-// })
-
+app.use((ctx, next) => {
+    return next().catch((err) => {
+        if(err.status === 401){
+            ctx.status = 401
+            ctx.body = 'Protected resource, use Authorization header to get access\n';
+        }else{
+            throw err;
+        }
+    })
+})
 
 app.use(require('./middleware/checktoken'))
 
@@ -83,7 +82,7 @@ app.use(bodyParser())
 app
     .use(routers.routes())
     .use(routers.allowedMethods())
-    .use(jwtKoa({secret}).unless({
+    .use(jwtKoa({secret: secret.secret}).unless({
         path: [/^\/api\/login/] //数组中的路径不需要通过jwt验证
     }))
 

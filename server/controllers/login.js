@@ -1,10 +1,11 @@
 const userMethods = require('../services/user-Info')
 const jwt = require('jsonwebtoken')
-const secret = 'my boke jwt'
+const secret = require('../middleware/token.config')
 
 const userLogin = {
     async login(ctx,next){
-        const requestBody = ctx.request.body;
+        const requestBody = ctx.request.body.data
+        // console.log(JSON.stringify(requestBody) + '--------controllers')
         let data = await userMethods.authenticate(requestBody.username, requestBody.password)
         if (!data) {
             ctx.e403({ code: 403, message: '邮箱或密码错误' })
@@ -13,7 +14,7 @@ const userLogin = {
                 name: data.username,
                 id: data.id
             }
-            const token = jwt.sign(userToken, secret, {expiresIn: '2h'})
+            const token = jwt.sign(userToken, secret.secret, {expiresIn: '2h'})
             data.token = token
             ctx.body = {
                 code: 0,

@@ -74,11 +74,7 @@ export default function $axios(options) {
                     data = response.data
                 }
                 // 根据返回的code值来做不同的处理
-                console.log(JSON.parse(data))
-                if (data.code == 401) {
-                    // token过期或者未登录 重定向到登录页 如code有很多 可以采用下面的switch
-                    router.push('/login')
-                }
+                // console.log(JSON.parse(data))
                 // switch (data.rc) {
                 //     case 1:
                 //         console.log(data.desc)
@@ -106,7 +102,11 @@ export default function $axios(options) {
 
                         case 401:
                         err.message = '未授权，请登录'
-                        router.push('/login')
+                        store.commit('logout')
+                        // router.replace({
+                        //     path: 'login',
+                        //     query: {redirect: router.currentRoute.fullPath}
+                        // })
                         break
 
                         case 403:
@@ -156,10 +156,10 @@ export default function $axios(options) {
         // 请求处理
         const method = options.method
         const url = options.url
-        const params = options.param
+        console.log(options)
         if (method === 'get') {
             instance.get(url, {
-                params
+                params: options.param
             }).then(res => {
                 resolve(res)
                 return false
@@ -168,7 +168,7 @@ export default function $axios(options) {
             })
         } else if (method === 'post') {
             instance.post(url, {
-                data: params
+                data: options.data
             }).then(res => {
                 resolve(res)
                 return false

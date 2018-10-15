@@ -9,7 +9,7 @@
     </section>
 </template>
 <script>
-import start from '../utils/direvtive'
+import start from '../utils/canvas-bg'
 
 export default {
     data() {

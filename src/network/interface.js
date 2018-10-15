@@ -5,28 +5,6 @@ import axios from './api'
  */
 
 // 单独导出
-export const query = () => {
-    return axios({
-        url: '/query',
-        method: 'get'
-    })
-}
-  
-export const list = (id) => {
-    return axios({
-        url: `/list${id}`,
-        method: 'get'
-    })
-}
-
-export const upload = data => {
-    return axios({
-        url: '/upload',
-        method: 'post',
-        data
-    })
-}
-
 export const login = data => {
     return axios({
         url: '/login',
@@ -47,9 +25,6 @@ export const getAllTableData = (type) => {
 
 // 默认全部导出
 export default {
-    query,
-    list,
-    upload,
     login,
     getAllTableData
 }

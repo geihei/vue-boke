@@ -1,14 +1,12 @@
 import router from './router'
 import store from './vuex'
-// import { Message } from 'element-ui'
-// import NProgress from 'nprogress' // progress bar
-// import 'nprogress/nprogress.css'// progress bar style
 
-function hasPermission(roles, permissionRoles) {
-    if (roles.includes('admin')) return true
-    if (!permissionRoles) return true
-    return roles.some(role => permissionRoles.includes(role))
-}
+// 权限验证 如果后期有需要
+// function hasPermission(roles, permissionRoles) {
+//     if (roles.includes('admin')) return true
+//     if (!permissionRoles) return true
+//     return roles.some(role => permissionRoles.includes(role))
+// }
 
 const whiteList = ['/login']
 
@@ -23,15 +21,10 @@ router.beforeEach((to, from, next) => {
         }
     } else {
         // token不存在
-        console.log(to.path)
         if (whiteList.includes(to.path)){
             next()
         } else {
             next(`/login?redirect=${to.path}`) //全部重定向到登录页
         }
     }
-})
-
-router.afterEach(() => {
-
 })

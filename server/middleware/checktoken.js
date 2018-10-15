@@ -1,5 +1,6 @@
 // 监测 token 是否过期
 const jwt = require('jsonwebtoken')
+const secret = require('./token.config')
 
 module.exports = async (ctx, next) => {
     // console.log(req.headers)
@@ -8,8 +9,8 @@ module.exports = async (ctx, next) => {
         token = ctx.request.headers['authorization'].split(' ')[1]
     }
     // 解构 token，生成一个对象 { name: xx, iat: xx, exp: xx }
-    
-	let decoded = jwt.decode(token, 'my boke jwt')
+    // console.log(secret)
+	let decoded = jwt.decode(token, secret.secret)
 	// console.log(decoded.exp + '-------------------------')
 	// console.log(Date.now() / 1000)
 	// 监测 token 是否过期
