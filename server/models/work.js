@@ -19,8 +19,10 @@ let tableSchema = new Schema({
 
 let tableModel = mongoose.model('tabledata', tableSchema, 'tabledata')
 
-async function queryTableData(page) {
-    let query = tableModel.find()
+async function queryTableData(type) {
+    let query
+    if (type == 'all')  query = tableModel.find()
+    else query = tableModel.find({'type': type})
     // if (!pwd) {
     //     console.log('--------------')
     //     query = query.select('-password')

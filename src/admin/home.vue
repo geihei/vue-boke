@@ -18,23 +18,9 @@ import listTable from '../components/list.vue'
 export default {
     data() {
         return {
-            tableData: []
+            
         }
     },
-    // created() {
-    //     // 请求数据
-    //     this.getAllTableData()
-    // },
-    // methods: {
-    //     getAllTableData() {
-    //         this.$api.getAllTableData().then(res => {
-    //             res = JSON.parse(res)
-    //             if(res.code == 0){
-    //                 this.tableData = res.data
-    //             }
-    //         })
-    //     }
-    // },
     components: {
         leftBar,
         commonHeader,

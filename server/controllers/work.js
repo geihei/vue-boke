@@ -2,10 +2,11 @@ const tableMethods = require('../services/work')
 
 const table = {
     async getAllTableData(ctx,next){
-        // const requestBody = ctx.request.body;
-        let data = await tableMethods.getData()
+        const requestQuery = ctx.request.query
+        const param = requestQuery.type
+        let data = await tableMethods.getData(param)
         if (!data) {
-            ctx.e403({ code: 403, message: '邮箱或密码错误' })
+            ctx.e403({ code: 403, message: '数据请求有误' })
         } else {
             ctx.body = {
                 code: 0,

@@ -2,8 +2,11 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = async (ctx, next) => {
-	// console.log(req.headers)
-	let token = ctx.request.headers['authorization'].split(' ')[1]
+    // console.log(req.headers)
+    let token
+    if (ctx.request.headers['authorization']) {
+        token = ctx.request.headers['authorization'].split(' ')[1]
+    }
     // 解构 token，生成一个对象 { name: xx, iat: xx, exp: xx }
     
 	let decoded = jwt.decode(token, 'my boke jwt')

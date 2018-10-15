@@ -35,10 +35,13 @@ export const login = data => {
     })
 }
 
-export const getAllTableData = data => {
+export const getAllTableData = (type) => {
     return axios({
-        url: '/getAllTableData',
-        method: 'get'
+        url: `/getAllTableData`,
+        method: 'get',
+        param: {
+            type: type
+        }
     })
 }
 

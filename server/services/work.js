@@ -1,9 +1,8 @@
 const WorkModel = require('../models/work')
 
 const tableMethods = {
-    async getData() {
-        let data = await WorkModel.queryTableData()
-        // data = data.toObject()
+    async getData(type) {
+        let data = await WorkModel.queryTableData(type)
         return data
     }
 }

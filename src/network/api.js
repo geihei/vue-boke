@@ -1,12 +1,9 @@
 import axios from 'axios'
 import config from './config'
 import qs from 'qs'
-import Cookies from "js-cookie"
 import router from '@/router'
-import store from '../vuex'
-
-// 使用vuex做全局loading时使用
-// import store from '@/store'
+// 使用vuex做全局管理使用
+import store from '@/vuex'
 
 export default function $axios(options) {
     return new Promise((resolve, reject) => {
@@ -153,11 +150,34 @@ export default function $axios(options) {
         )
 
         // 请求处理
-        instance(options).then(res => {
-            resolve(res)
-            return false
-        }).catch(error => {
-            reject(error)
-        })
+        console.log(options)
+        const method = options.method
+        const url = options.url
+        const params = options.param
+        if (method === 'get') {
+            instance.get(url, {
+                params
+            }).then(res => {
+                resolve(res)
+                return false
+            }).catch(error => {
+                reject(error)
+            })
+        } else if (method === 'post') {
+            instance.post(url, {
+                data: params
+            }).then(res => {
+                resolve(res)
+                return false
+            }).catch(error => {
+                reject(error)
+            })
+        }
+        // instance(options).then(res => {
+        //     resolve(res)
+        //     return false
+        // }).catch(error => {
+        //     reject(error)
+        // })
     })
 }

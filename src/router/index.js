@@ -23,20 +23,10 @@ const routes = [
         component: Home
     },
     {
-        path: '/home/:html',
+        path: '/home/:type',
         name: 'html',
         component: Home,
     },
-    {
-        path: '/home/:javascript',
-        name: 'javascript',
-        component: Home,
-    },
-    {
-        path: '/home/:css',
-        name: 'css',
-        component: Home,
-    }
 ]
 
 // 页面刷新时 重新赋值token 防止刷新是vuex中状态丢失
