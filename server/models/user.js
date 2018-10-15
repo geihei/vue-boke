@@ -1,4 +1,4 @@
-const mongoose = require('./../utils/db-util')
+const mongoose = require('../utils/db-util')
 const Schema = mongoose.Schema
 // 数据增删改查
 let userSchema = new Schema({

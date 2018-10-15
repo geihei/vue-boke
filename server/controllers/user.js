@@ -1,4 +1,4 @@
-const userMethods = require('../services/user-Info')
+const userMethods = require('../services/user')
 const jwt = require('jsonwebtoken')
 const secret = require('../middleware/token.config')
 

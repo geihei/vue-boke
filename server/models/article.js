@@ -1,4 +1,4 @@
-const mongoose = require('./../utils/db-util')
+const mongoose = require('../utils/db-util')
 const Schema = mongoose.Schema
 // 数据增删改查
 let tableSchema = new Schema({
@@ -19,7 +19,7 @@ let tableSchema = new Schema({
 
 let tableModel = mongoose.model('tabledata', tableSchema, 'tabledata')
 
-async function queryTableData(type) {
+async function queryArticleData(type) {
     let query
     if (type == 'all')  query = tableModel.find()
     else query = tableModel.find({'type': type})
@@ -35,5 +35,5 @@ async function queryTableData(type) {
 
 module.exports = {
     tableModel,
-    queryTableData,
+    queryArticleData,
 }

@@ -1,10 +1,10 @@
-const tableMethods = require('../services/work')
+const articleMethods = require('../services/article')
 
 const table = {
-    async getAllTableData(ctx,next){
+    async getAllArticleData(ctx,next){
         const requestQuery = ctx.request.query
         const param = requestQuery.type
-        let data = await tableMethods.getData(param)
+        let data = await articleMethods.getArticleData(param)
         if (!data) {
             ctx.e403({ code: 403, message: '数据请求有误' })
         } else {

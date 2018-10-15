@@ -13,9 +13,9 @@ export const login = data => {
     })
 }
 
-export const getAllTableData = (type) => {
+export const getAllArticleData = (type) => {
     return axios({
-        url: `/getAllTableData`,
+        url: `/getAllArticleData`,
         method: 'get',
         param: {
             type: type
@@ -26,5 +26,5 @@ export const getAllTableData = (type) => {
 // 默认全部导出
 export default {
     login,
-    getAllTableData
+    getAllArticleData
 }

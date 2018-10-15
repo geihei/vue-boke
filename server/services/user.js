@@ -1,8 +1,8 @@
-const UserModel = require('../models/user-Info')
+const userModel = require('../models/user')
 
 const userMethods = {
     async authenticate(uname, password) {
-        let user = await UserModel.queryByUserName(uname)
+        let user = await userModel.queryByUserName(uname)
         if (!user) {
             throw new Error('user uname or password is error!')
         }

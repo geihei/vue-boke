@@ -4,9 +4,8 @@ const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
 const cors = require("koa2-cors"); 
 const routers = require('./routers/index')
-const jwt = require('jsonwebtoken')
 const jwtKoa = require('koa-jwt')
-const util = require('util')
+// const util = require('util')
 // const verify = util.promisify(jwt.verify)
 const secret = require('./middleware/token.config')
 
