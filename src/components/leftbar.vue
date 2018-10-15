@@ -1,22 +1,22 @@
 <template>
      <el-aside class="el_side">
-        <el-menu :default-openeds="['1']" :default-active="'1-1'">
+        <el-menu :default-openeds="[]" :default-active="this.$route.path">
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-message"></i>文章列表</template>
                 <el-menu-item-group>
                     <router-link :to="'/home'">
-                        <el-menu-item index="1-1">全部文章</el-menu-item>
+                        <el-menu-item index="/home">全部文章</el-menu-item>
                     </router-link>
                     <el-submenu index="1-2">
                         <template slot="title">文章分类</template>
                         <router-link :to="'/home/html'">
-                            <el-menu-item index="1-2-1">html</el-menu-item>
+                            <el-menu-item index="/home/html">html</el-menu-item>
                         </router-link>
                         <router-link :to="'/home/javascript'">
-                            <el-menu-item index="1-2-2">javascript</el-menu-item>
+                            <el-menu-item index="/home/javascript">javascript</el-menu-item>
                         </router-link>
                         <router-link :to="'/home/css'">
-                            <el-menu-item index="1-2-3">css</el-menu-item>
+                            <el-menu-item index="/home/css">css</el-menu-item>
                         </router-link>
                     </el-submenu>
                 </el-menu-item-group>
@@ -44,7 +44,7 @@
 export default {
     data() {
         return {
-
+            
         }
     },
     created() {

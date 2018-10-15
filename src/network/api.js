@@ -150,7 +150,6 @@ export default function $axios(options) {
         )
 
         // 请求处理
-        console.log(options)
         const method = options.method
         const url = options.url
         const params = options.param
@@ -172,12 +171,12 @@ export default function $axios(options) {
             }).catch(error => {
                 reject(error)
             })
+        } else if (method === 'put') {
+
+        } else if (method === 'delete') {
+
+        } else if (method === 'dispatch') {
+
         }
-        // instance(options).then(res => {
-        //     resolve(res)
-        //     return false
-        // }).catch(error => {
-        //     reject(error)
-        // })
     })
 }

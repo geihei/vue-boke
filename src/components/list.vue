@@ -29,7 +29,6 @@ export default {
         getAllTableData() {
             // 拿路由参数 根据参数获取不同table
             const urlParam = this.$route.params.type || 'all'
-            console.log(urlParam)
             this.$api.getAllTableData(urlParam).then(res => {
                 res = JSON.parse(res)
                 if(res.code == 0){
