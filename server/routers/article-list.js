@@ -6,6 +6,6 @@ const router = require('koa-router')()
 const article = require('../controllers/article')
 
 const routers = router
-    .get('/getAllArticleData', article.getAllArticleData)
+    .get('/getArticleDataByType', article.getArticleDataByType)
 
 module.exports = routers

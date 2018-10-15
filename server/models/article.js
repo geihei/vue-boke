@@ -19,15 +19,15 @@ let tableSchema = new Schema({
 
 let tableModel = mongoose.model('tabledata', tableSchema, 'tabledata')
 
-async function queryArticleData(type) {
+async function queryArticleDataByType(type) {
     let query
     if (type == 'all')  query = tableModel.find()
     else query = tableModel.find({'type': type})
-    // if (!pwd) {
-    //     console.log('--------------')
-    //     query = query.select('-password')
-    // }
     return query.exec()
+}
+
+async function queryArticleDataByAuthor() {
+
 }
 
 
@@ -35,5 +35,6 @@ async function queryArticleData(type) {
 
 module.exports = {
     tableModel,
-    queryArticleData,
+    queryArticleDataByType,
+    queryArticleDataByAuthor
 }
