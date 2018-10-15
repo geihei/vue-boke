@@ -103,10 +103,10 @@ export default function $axios(options) {
                         case 401:
                         err.message = '未授权，请登录'
                         store.commit('logout')
-                        // router.replace({
-                        //     path: 'login',
-                        //     query: {redirect: router.currentRoute.fullPath}
-                        // })
+                        router.replace({
+                            path: 'login',
+                            query: {redirect: router.currentRoute.fullPath}
+                        })
                         break
 
                         case 403:

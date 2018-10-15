@@ -13,18 +13,16 @@ export const login = data => {
     })
 }
 
-export const getArticleDataByType = (type) => {
+export const getArticleData = (param) => {
     return axios({
-        url: `/getArticleDataByType`,
+        url: `/getArticleData`,
         method: 'get',
-        param: {
-            type: type
-        }
+        param
     })
 }
 
 // 默认全部导出
 export default {
     login,
-    getArticleDataByType
+    getArticleData
 }

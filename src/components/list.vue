@@ -14,7 +14,7 @@ export default {
     },
     watch: {
         // 如果路由有变化，会再次执行该方法
-        "$route": "getArticleDataByType"
+        "$route": "getArticleData"
     },
     data() {
         return {
@@ -23,15 +23,15 @@ export default {
     },
     created() {
         // 请求数据
-        this.getArticleDataByType()
+        this.getArticleData()
     },
     methods: {
-        getArticleDataByType() {
-            // 拿路由参数 根据参数获取不同table
-            const urlParam = this.$route.params.type || 'all'
-            this.$api.getArticleDataByType(urlParam).then(res => {
+        getArticleData() {
+            // 拿路由参数 根据参数获取不同table this.$route.params.type
+            const urlParam = this.$route.params.type ? { 'type': this.$route.params.type } : {}
+            this.$api.getArticleData(urlParam).then(res => {
                 res = JSON.parse(res)
-                if(res.code == 0){
+                if (res.code == 0){
                     this.tableData = res.data
                 }
             })

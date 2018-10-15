@@ -1,10 +1,9 @@
 const articleMethods = require('../services/article')
 
-const table = {
-    async getArticleDataByType(ctx,next){
+const article = {
+    async getArticleData(ctx, next) {
         const requestQuery = ctx.request.query
-        const param = requestQuery.type
-        let data = await articleMethods.getArticleDataByType(param)
+        let data = await articleMethods.getArticleData(requestQuery)
         if (!data) {
             ctx.e403({ code: 403, message: '数据请求有误' })
         } else {
@@ -14,8 +13,8 @@ const table = {
                 data
             }
         }
-        await next()    
-    },
+        await next()
+    }
 }
 
-module.exports = table
+module.exports = article
