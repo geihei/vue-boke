@@ -20,18 +20,17 @@ export default function $axios(options) {
             // 请求拦截器 在请求开始前做一些验证
             config => {
                 let token = store.state.token
-                // 1. 请求开始的时候可以结合 vuex 开启全屏 loading 动画
-                // console.log(store.state.loading)
-                // console.log('准备发送请求...')
-                // 2. 带上token
+                // 请求开始的时候可以结合 vuex 开启全屏 loading 动画
+                // ...
+                // 带上token
                 if (token) {
-                    // config.headers.accessToken = token
+                    // 不知道为什么一定要加上Bearer 在token前
                     config.headers.Authorization = `Bearer ${store.state.token}`
                 } else {
-                    // 重定向到登录页面
+                    // token不存在 重定向到登录页面
                     router.push('/login')
                 }
-                // 3. 根据请求方法，序列化传来的参数，根据后端需求是否序列化
+                // 根据请求方法，序列化传来的参数，根据后端需求是否序列化
                 if (config.method === 'post') {
                     if (config.data.__proto__ === FormData.prototype || config.url.endsWith('path') || config.url.endsWith('mark') || config.url.endsWith('patchs')) {
 
@@ -45,12 +44,12 @@ export default function $axios(options) {
             error => {
                 // 请求错误时
                 console.log('request:', error)
-                // 1. 判断请求超时
+                // 判断请求超时
                 if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1) {
                     console.log('timeout请求超时')
                     // return service.request(originalRequest);//再重复请求一次
                 }
-                // 2. 需要重定向到错误页面
+                // 需要重定向到错误页面
                 const errorInfo = error.response
                 console.log(errorInfo)
                 if (errorInfo) {
@@ -74,8 +73,12 @@ export default function $axios(options) {
                 } else {
                     data = response.data
                 }
-                // console.log(data)
                 // 根据返回的code值来做不同的处理
+                console.log(JSON.parse(data))
+                if (data.code == 401) {
+                    // token过期或者未登录 重定向到登录页 如code有很多 可以采用下面的switch
+                    router.push('/login')
+                }
                 // switch (data.rc) {
                 //     case 1:
                 //         console.log(data.desc)
@@ -103,6 +106,7 @@ export default function $axios(options) {
 
                         case 401:
                         err.message = '未授权，请登录'
+                        router.push('/login')
                         break
 
                         case 403:

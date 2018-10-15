@@ -15,7 +15,7 @@ module.exports = async (ctx, next) => {
 	// 监测 token 是否过期
 	if(token && decoded.exp <= Date.now() / 1000) {
 		ctx.body = {
-            status: 401,
+            body: 401,
             message:'token 已过期'
         };
     }

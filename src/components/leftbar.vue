@@ -1,6 +1,6 @@
 <template>
      <el-aside class="el_side">
-        <el-menu :default-openeds="[]" :default-active="this.$route.path">
+        <el-menu :default-openeds="defaultOpeneds" :default-active="this.$route.path">
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-message"></i>文章列表</template>
                 <el-menu-item-group>
@@ -44,7 +44,7 @@
 export default {
     data() {
         return {
-            
+            defaultOpeneds: [] // 动态设置 若直接写行内 会出现选择其他侧边栏自动关闭当前侧边栏的bug
         }
     },
     created() {

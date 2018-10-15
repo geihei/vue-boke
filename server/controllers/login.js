@@ -13,7 +13,7 @@ const userLogin = {
                 name: data.username,
                 id: data.id
             }
-            const token = jwt.sign(userToken, secret, {expiresIn: '24h'})
+            const token = jwt.sign(userToken, secret, {expiresIn: '2h'})
             data.token = token
             ctx.body = {
                 code: 0,
