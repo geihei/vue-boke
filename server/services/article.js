@@ -6,7 +6,7 @@ const articleMethods = {
         let data = await articleModel.queryArticleData(params)
         return data
     },
-    async deleteArticle(idList) {
+    async deleteArticleData(idList) {
         let data = await articleModel.deleteArticleData(idList)
         return data
     },

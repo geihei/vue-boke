@@ -44,10 +44,12 @@ async function queryArticleData(params) {
  * 数据类型为数组 方便批量删除
  */
 async function deleteArticleData(idList) {
-    articleModel.remove({_id: { $in: idList}}, (err, res) => {
+    console.log(idList + '-----------model')
+    let query = articleModel.remove({'_id': { $in: idList}}, (err, res) => {
         if (err) console.log(err)
-        console.log('删除成功：' + res)
+        console.log('删除成功：' + res.ok)
     })
+    return query.exec()
 }
 
 /**

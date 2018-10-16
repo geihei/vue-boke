@@ -32,8 +32,8 @@ const article = {
     },
     async deleteArticleData(ctx, next) {
         const requestBody = ctx.request.body
-        console.log(requestBody)
-        let data = await articleMethods.deleteArticleData(requestBody)
+        console.log(requestBody.data)
+        let data = await articleMethods.deleteArticleData(requestBody.data)
         if (!data) {
             ctx.e403({ code: 403, message: '数据请求有误' })
         } else {
