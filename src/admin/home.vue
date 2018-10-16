@@ -5,16 +5,16 @@
             <common-header></common-header>
             <el-main>
                 <keep-alive>
-                    <list-table></list-table>
+                    <router-view></router-view>
                 </keep-alive>
             </el-main>
         </el-container>
     </el-container>
 </template>
 <script>
-import leftBar from '../components/leftbar.vue'
-import commonHeader from '../components/header.vue'
-import listTable from '../components/list.vue'
+import leftBar from '@/components/leftbar.vue'
+import commonHeader from '@/components/header.vue'
+import listTable from '@/components/list.vue'
 export default {
     data() {
         return {

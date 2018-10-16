@@ -19,6 +19,9 @@
                             <el-menu-item index="/home/css">css</el-menu-item>
                         </router-link>
                     </el-submenu>
+                    <router-link :to="'/articleform'">
+                        <el-menu-item index="/articleform">add && edit</el-menu-item>
+                    </router-link>
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="2">

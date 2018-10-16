@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import store from '../vuex'
 import Login from '@/admin/login'
 import Home from '@/admin/home'
+import List from '@/components/list'
+import ArticleForm from '@/components/article-form'
 
 Vue.use(Router)
 
@@ -19,13 +21,24 @@ const routes = [
     },
     {
         path: '/home',
-        name: 'home',
-        component: Home
-    },
-    {
-        path: '/home/:type',
-        name: 'html',
         component: Home,
+        children: [
+            {
+                path: '',
+                name: 'home',
+                component: List
+            },
+            {
+                path: '/home/:type',
+                name: 'list',
+                component: List,
+            },
+            {
+                path: '/articleform',
+                name: 'articleform',
+                component: ArticleForm
+            }
+        ]
     },
 ]
 
