@@ -58,8 +58,9 @@ export default {
             })
         },
         // 逐行编辑
-        handleUpdate() {
-            
+        handleUpdate(index, row) {
+            this.$store.commit('setArticleData', row)
+            this.$router.push('/articleform')
         },
         // 逐行删除
         handleDelete(index, row) {

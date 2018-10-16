@@ -12,7 +12,7 @@
             </el-select>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="submitForm('newDataForm')">新增</el-button>
+            <el-button type="primary" @click="submitForm('newDataForm')">提交</el-button>
             <el-button @click="resetForm('newDataForm')">重置</el-button>
         </el-form-item>
     </el-form>
@@ -20,12 +20,10 @@
 
 <script>
     export default {
-        props: {
-            articleData: {}
-        },
         data() {
             return {
-                newDataForm: this.articleData || {
+                newDataForm: {
+                    _id: '',
                     title: '',
                     content: '',
                     type: '',
@@ -65,14 +63,24 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.newDataForm.time = new Date().toLocaleDateString()
-                        // console.log(this.newDataForm)
-                        // 传入的data是formdata还是对象 有什么区别 是否需要转换
-                        this.$api.updateArticleList(this.newDataForm).then(res => {
-                            res = JSON.parse(res)
-                            if (res.code == 0) {
-                                console.log('新增成功')
-                            }
-                        })
+                        if (this.newDataForm._id) {
+                            // console.log(this.newDataForm)
+                            // 传入的data是formdata还是对象 有什么区别 是否需要转换
+                            this.$api.updateArticleList(this.newDataForm).then(res => {
+                                res = JSON.parse(res)
+                                if (res.code == 0) {
+                                    console.log('修改成功')
+                                }
+                            })
+                        } else {
+                            delete this.newDataForm._id
+                            this.$api.updateArticleList(this.newDataForm).then(res => {
+                                res = JSON.parse(res)
+                                if (res.code == 0) {
+                                    console.log('新增成功')
+                                }
+                            })
+                        }
                     } else {
                         console.log('error submit!!')
                         return false;
@@ -81,6 +89,13 @@
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
+            }
+        },
+        created() {
+            // 使用vuex会出现编辑页面刷新数据丢失的bug keepalive是否可以改善
+            if (this.$store.state.editArticleData) {
+                // 思考 深拷贝浅拷贝在此处是否会有bug 目前没发现问题
+                this.newDataForm = this.$store.state.editArticleData
             }
         }
     }

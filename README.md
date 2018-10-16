@@ -17,8 +17,8 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 
-# 在server目录下运行 启动server服务
-node app.js
+# 启动server服务
+npm run server
 
 # 本地需要有MongoDB
 ```

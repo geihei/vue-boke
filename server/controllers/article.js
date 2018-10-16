@@ -17,9 +17,11 @@ const article = {
     },
     async updateArticleList(ctx, next) {
         const requestBody = ctx.request.body
-        let data 
-        if (requestBody.data.id) {
-            data = await articleMethods.updateArticleList(requestBody.data, requestBody.data.id)
+        console.log(requestBody.data.author + '------------controllers11111111')
+        if (requestBody.data._id) {
+            const id = requestBody.data._id
+            delete requestBody.data._id
+            data = await articleMethods.updateArticleList(requestBody.data, id)
         } else {
             try {
                 await articleMethods.updateArticleList(requestBody.data)

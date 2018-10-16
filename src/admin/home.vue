@@ -4,9 +4,10 @@
         <el-container class="el_container">
             <common-header></common-header>
             <el-main>
-                <keep-alive>
+                <!-- 使用keep-alive 父级路由没有变化 只有子路由变化的时候不会刷新 还没想好具体应用方法 有待改善 -->
+                <!-- <keep-alive> -->
                     <router-view></router-view>
-                </keep-alive>
+                <!-- </keep-alive> -->
             </el-main>
         </el-container>
     </el-container>

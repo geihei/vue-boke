@@ -156,7 +156,7 @@ export default function $axios(options) {
         // 请求处理
         const method = options.method
         const url = options.url
-        console.log(options)
+        // console.log(options)
         if (method === 'get') {
             instance.get(url, {
                 params: options.param

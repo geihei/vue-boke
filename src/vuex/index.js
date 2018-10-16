@@ -9,6 +9,7 @@ export default new Vuex.Store({
         username: '',
         userId: '',
         currentTime: '',
+        editArticleData: {},
     },
     getters: {
         
@@ -32,6 +33,9 @@ export default new Vuex.Store({
         setToken: (state) => {
             state.token = localStorage.token
             state.username = localStorage.username
+        },
+        setArticleData: (state, data) => {
+            state.editArticleData = data
         }
     },
     actions: {
