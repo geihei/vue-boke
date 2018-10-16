@@ -6,16 +6,12 @@ const articleMethods = {
         let data = await articleModel.queryArticleData(params)
         return data
     },
-    async addArticle(articleData) {
-        let data = await articleModel.addArticle(articleData)
+    async deleteArticle(idList) {
+        let data = await articleModel.deleteArticleData(idList)
         return data
     },
-    async deleteArticle(id) {
-        let data = await articleModel.deleteArticle(id)
-        return data
-    },
-    async updateArticle(articleData) {
-        let data = await articleModel.updateArticle(articleData)
+    async updateArticleList(articleData, id) {
+        let data = await articleModel.updateArticleList(articleData, id)
         return data
     }
 }

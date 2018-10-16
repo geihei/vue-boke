@@ -35,6 +35,9 @@ export default {
                     this.tableData = res.data
                 }
             })
+        },
+        updateArticleList() {
+            
         }
     },
 }

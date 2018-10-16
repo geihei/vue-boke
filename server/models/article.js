@@ -33,66 +33,45 @@ let articleModel = mongoose.model('articlelist', articleSchema, 'articlelist')
  */
 async function queryArticleData(params) {
     let query
-    console.log(JSON.stringify(params) + '----------models')
     if (params === {}) query = articleModel.find()
     else query = articleModel.find(params)
     return query.exec()
 }
 
 /**
- * 新增文章
- * @param {*} articleData 
- */
-async function addArticle(articleData) {
-    let articleData = {
-        title: 'addtitle',
-        content: '我们的目标是--没有蛀牙',
-        time: '2018-11-11',
-        type: 'css',
-        author: 'moonths',
-        isDel: '0'
-    }
-    articleModel.create(articleData, (err, articleData) => {
-        if (err) console.log(err)
-        console.log('新增成功:' + articleData)
-    })
-}
-
-/**
  * 删除文章 彻底删除
- * @param {*} id 
+ * @param {删除项id} idList
+ * 数据类型为数组 方便批量删除
  */
-async function deleteArticle(id) {
-    articleModel.remove({_id: id}, (err, res) => {
+async function deleteArticleData(idList) {
+    articleModel.remove({_id: { $in: idList}}, (err, res) => {
         if (err) console.log(err)
         console.log('删除成功：' + res)
     })
 }
 
 /**
- * 更新文章 放置回收站 isDel = 1
- * @param {*} articleData 
+ * 新增或修改文章列表
+ * @param {文章列表数据} articleData 
+ * 若有id则为修改 没有id则为新增
  */
-async function updateArticle(articleData) {
-    let articleData = {
-        _id: '',
-        title: 'addtitle',
-        content: '我们的目标是--没有蛀牙',
-        time: '2018-11-11',
-        type: 'css',
-        author: 'moonths',
-        isDel: '1'
+async function updateArticleList(articleData, id) {
+    if (id) {
+        articleModel.update({_id: id}, articleData, (err, res) => {
+            if (err) console.log(err)
+            console.log('更新成功：' + res)
+        })
+    } else {
+        articleModel.create(articleData, (err, articleData) => {
+            if (err) console.log(err)
+            console.log('新增成功:' + articleData)
+        })
     }
-    articleModel.update({_id: articleData._id}, articleData, (err, res) => {
-        if (err) console.log(err)
-        console.log('更新成功：' + res)
-    })
 }
 
 module.exports = {
     articleModel,
     queryArticleData,
-    addArticle,
-    deleteArticle,
-    updateArticle
+    deleteArticleData,
+    updateArticleList
 }

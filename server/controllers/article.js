@@ -14,6 +14,36 @@ const article = {
             }
         }
         await next()
+    },
+    async updateArticleList(ctx, next) {
+        const requestBody = ctx.request.body
+        console.log(requestBody)
+        let data = await articleMethods.updateArticleList(requestBody)
+        if (!data) {
+            ctx.e403({ code: 403, message: '数据请求有误' })
+        } else {
+            ctx.body = {
+                code: 0,
+                message: '更新tabledata成功',
+                data
+            }
+        }
+        await next()
+    },
+    async deleteArticleData(ctx, next) {
+        const requestBody = ctx.request.body
+        console.log(requestBody)
+        let data = await articleMethods.deleteArticleData(requestBody)
+        if (!data) {
+            ctx.e403({ code: 403, message: '数据请求有误' })
+        } else {
+            ctx.body = {
+                code: 0,
+                message: '删除成功',
+                data
+            }
+        }
+        await next()
     }
 }
 

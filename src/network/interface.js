@@ -7,17 +7,25 @@ import axios from './api'
 // 单独导出
 export const login = data => {
     return axios({
-        url: '/login',
-        method: 'post',
+        url: `/login`,
+        method: `post`,
         data
     })
 }
 
-export const getArticleData = (param) => {
+export const getArticleData = param => {
     return axios({
         url: `/getArticleData`,
         method: 'get',
         param
+    })
+}
+
+export const updateArticleList = data => {
+    return axios({
+        url: `/updateArticleList`,
+        method: `post`,
+        data
     })
 }
 
