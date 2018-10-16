@@ -1,8 +1,8 @@
 <template>
     <el-container style="height: 100%;">
-        <left-bar></left-bar>
+        <keep-alive><left-bar></left-bar></keep-alive>
         <el-container class="el_container">
-            <common-header></common-header>
+            <keep-alive><common-header></common-header></keep-alive>
             <el-main>
                 <!-- 使用keep-alive 父级路由没有变化 只有子路由变化的时候不会刷新 还没想好具体应用方法 有待改善 -->
                 <!-- <keep-alive> -->

@@ -28,7 +28,7 @@
                     content: '',
                     type: '',
                     time: '',
-                    author: window.localStorage.username,
+                    author: '',
                 },
                 rules: {
                     title: [
@@ -63,6 +63,7 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.newDataForm.time = new Date().toLocaleDateString()
+                        this.newDataForm.author = window.localStorage.username
                         if (this.newDataForm._id) {
                             // console.log(this.newDataForm)
                             // 传入的data是formdata还是对象 有什么区别 是否需要转换
@@ -96,6 +97,8 @@
             if (this.$store.state.editArticleData) {
                 // 思考 深拷贝浅拷贝在此处是否会有bug 目前没发现问题
                 this.newDataForm = this.$store.state.editArticleData
+            } else {
+                this.resetForm('newDataForm')
             }
         }
     }

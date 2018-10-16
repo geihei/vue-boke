@@ -13,7 +13,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <router-link :to="'/articleform'"><el-button>新增</el-button></router-link>
+        <el-button @click="addArticle">新增</el-button>
     </div>
 </template>
 <script>
@@ -60,6 +60,10 @@ export default {
         // 逐行编辑
         handleUpdate(index, row) {
             this.$store.commit('setArticleData', row)
+            this.$router.push('/articleform')
+        },
+        addArticle() {
+            this.$store.commit('setArticleData', {})
             this.$router.push('/articleform')
         },
         // 逐行删除
