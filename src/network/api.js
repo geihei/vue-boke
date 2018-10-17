@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from './config'
 import qs from 'qs'
 import router from '@/router'
+import vue from 'vue'
 // 使用vuex做全局管理使用
 import store from '@/vuex'
 
@@ -101,7 +102,10 @@ export default function $axios(options) {
                         break
 
                         case 401:
-                        err.message = '未授权，请登录'
+                        vue.prototype.$message({
+                            message: 'token过期，请重新登录',
+                            type: 'warning'
+                        })
                         store.commit('logout')
                         router.replace({
                             path: 'login',

@@ -95,7 +95,6 @@ export default {
                     this.newDataForm.time = new Date().toLocaleDateString()
                     this.newDataForm.author = window.localStorage.username
                     if (this.newDataForm._id) {
-                        // console.log(this.newDataForm)
                         // 传入的data是formdata还是对象 有什么区别 是否需要转换
                         this.updateArticleList(this.newDataForm, '修改失败')
                     } else {
@@ -150,7 +149,8 @@ export default {
         }
     },
     created() {
-        // 使用vuex会出现编辑页面刷新数据丢失的bug keepalive是否可以改善
+        console.log(1)
+        // 最好不要使用vuex传送数据 刷新丢失数据 最好选择重新发送请求 丢失数据的处理可以选择刷新前提示优化
         if (this.$store.state.editArticleData) this.newDataForm = deepClone(this.$store.state.editArticleData) // 不要使用浅拷贝 避免出现改变源数据的bug
     },
     updated() {
