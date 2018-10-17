@@ -4,7 +4,7 @@
             <el-input v-model="newDataForm.title"></el-input>
         </el-form-item>
         <el-form-item label="文章内容" prop="content">
-            <el-input type="textarea" v-model="newDataForm.content"></el-input>
+            <mavon-editor v-model="newDataForm.content" :toolbars="toolbars" @change="editorChange"/>
         </el-form-item>
         <el-form-item label="类别" prop="type">
             <el-select v-model="newDataForm.type" placeholder="请选择">
@@ -17,91 +17,145 @@
         </el-form-item>
     </el-form>
 </template>
-
 <script>
-    export default {
-        data() {
-            return {
-                newDataForm: {
-                    _id: '',
-                    title: '',
-                    content: '',
-                    type: '',
-                    time: '',
-                    author: '',
-                },
-                rules: {
-                    title: [
-                        { required: true, message: '请填写文章名称', trigger: 'blur' },
-                        { min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur' }
-                    ],
-                    content: [
-                        { required: true, message: '请填写文章内容', trigger: 'blur' }
-                    ],
-                    type: [
-                        { required: true, message: '请选择类别', trigger: 'change' }
-                    ],
-                },
-                options: [
-                    {
-                        value: 'html',
-                        label: 'html'
-                    }, 
-                    {
-                        value: 'css',
-                        label: 'css'
-                    }, 
-                    {
-                        value: 'javascript',
-                        label: 'javascript'
-                    },
-                ]
-            }
-        },
-        methods: {
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        this.newDataForm.time = new Date().toLocaleDateString()
-                        this.newDataForm.author = window.localStorage.username
-                        if (this.newDataForm._id) {
-                            // console.log(this.newDataForm)
-                            // 传入的data是formdata还是对象 有什么区别 是否需要转换
-                            this.$api.updateArticleList(this.newDataForm).then(res => {
-                                res = JSON.parse(res)
-                                if (res.code == 0) {
-                                    console.log('修改成功')
-                                }
-                            })
-                        } else {
-                            delete this.newDataForm._id
-                            this.$api.updateArticleList(this.newDataForm).then(res => {
-                                res = JSON.parse(res)
-                                if (res.code == 0) {
-                                    console.log('新增成功')
-                                }
-                            })
-                        }
-                    } else {
-                        console.log('error submit!!')
-                        return false;
-                    }
-                });
+import deepClone from '@/utils/deepClone'
+export default {
+    data() {
+        return {
+            // 文本编辑器
+            toolbars: {
+                bold: true, // 粗体
+                italic: true, // 斜体
+                header: true, // 标题
+                underline: true, // 下划线
+                mark: true, // 标记
+                superscript: true, // 上角标
+                quote: true, // 引用
+                ol: true, // 有序列表
+                link: true, // 链接
+                imagelink: true, // 图片链接
+                help: true, // 帮助
+                code: true, // code
+                subfield: true, // 是否需要分栏
+                fullscreen: true, // 全屏编辑
+                readmodel: true, // 沉浸式阅读
+                undo: true, // 上一步
+                trash: true, // 清空
+                save: true, // 保存（触发events中的save事件）
+                navigation: true // 导航目录
             },
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
+            // 表单data
+            newDataForm: {
+                _id: '',
+                title: '',
+                content: '',
+                type: '',
+                time: '',
+                author: '',
+            },
+            // 表单规则检验
+            rules: {
+                title: [
+                    { required: true, message: '请填写文章名称', trigger: 'blur' },
+                    { min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur' }
+                ],
+                content: [
+                    { required: true, message: '请填写文章内容', trigger: 'blur' }
+                ],
+                type: [
+                    { required: true, message: '请选择类别', trigger: 'change' }
+                ],
+            },
+            // 类别选项
+            options: [
+                {
+                    value: 'html',
+                    label: 'html'
+                }, 
+                {
+                    value: 'css',
+                    label: 'css'
+                }, 
+                {
+                    value: 'javascript',
+                    label: 'javascript'
+                },
+            ],
+            time: '',
+            timer: '',
+        }
+    },
+    methods: {
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.newDataForm.time = new Date().toLocaleDateString()
+                    this.newDataForm.author = window.localStorage.username
+                    if (this.newDataForm._id) {
+                        // console.log(this.newDataForm)
+                        // 传入的data是formdata还是对象 有什么区别 是否需要转换
+                        this.updateArticleList(this.newDataForm, '修改失败')
+                    } else {
+                        delete this.newDataForm._id
+                        this.updateArticleList(this.newDataForm, '新增失败')
+                    }
+                } else {
+                    this.$message.error('请正确填写表单!')
+                    return false;
+                }
+            });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+        updateArticleList(data, mes) {
+            this.$api.updateArticleList(data).then(res => {
+                res = JSON.parse(res)
+                if (res.code == 0) {
+                    this.$message({
+                        message: res.message,
+                        type: 'success'
+                    })
+                } else {
+                    this.$message.error(mes)
+                }
+            })
+        },
+        saveDraft(oldTime) {
+            let nowTime = new Date().getTime()
+            // 判断是否已保存 如果未保存则执行
+            if (!window.localStorage.articleContent) {
+                this.timer = setInterval(() => {
+                    nowTime += 1000
+                    if (nowTime - oldTime > 10000) {
+                        window.localStorage.articleContent = this.newDataForm.content
+                        this.$notify({
+                            title: '成功',
+                            message: '自动保存为草稿',
+                            type: 'success'
+                        });
+                        clearInterval(this.timer)
+                    }
+                }, 1000)
             }
         },
-        created() {
-            // 使用vuex会出现编辑页面刷新数据丢失的bug keepalive是否可以改善
-            if (this.$store.state.editArticleData) {
-                // 思考 深拷贝浅拷贝在此处是否会有bug 目前没发现问题
-                this.newDataForm = this.$store.state.editArticleData
-            } else {
-                this.resetForm('newDataForm')
-            }
+        editorChange(value) {
+            if (value) this.time = new Date().getTime()
+        }
+    },
+    created() {
+        // 使用vuex会出现编辑页面刷新数据丢失的bug keepalive是否可以改善
+        if (this.$store.state.editArticleData) this.newDataForm = deepClone(this.$store.state.editArticleData) // 不要使用浅拷贝 避免出现改变源数据的bug
+    },
+    updated() {
+        if (this.newDataForm.content) {
+            // 清空timer 保存之后如果继续改动重新走timer 清空storage 重新保存
+            clearInterval(this.timer)
+            window.localStorage.articleContent = ''
+            this.saveDraft(this.time)
         }
     }
+}
 </script>
 <style lang="less" scoped>
 

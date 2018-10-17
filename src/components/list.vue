@@ -8,12 +8,13 @@
             <el-table-column prop="author" label="作者" align="center" width="200"></el-table-column>
             <el-table-column label="操作" align="center" width="200">
                 <template slot-scope="scope">
-                    <el-button size="mini" @click="handleUpdate(scope.$index, scope.row)" :disabled="isShowBtn">编辑</el-button>
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)" :disabled="isShowBtn">删除</el-button>
+                    <el-button size="mini" @click="handleUpdate(scope.row)" :disabled="isShowBtn">编辑</el-button>
+                    <el-button size="mini" type="danger" @click="deleteArticle(scope.row._id)" :disabled="isShowBtn">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
         <el-button @click="addArticle">新增</el-button>
+        <el-button @click="deleteArticle(delArr)" :disabled="!isShowBtn">删除选中</el-button>
     </div>
 </template>
 <script>
@@ -24,8 +25,7 @@ export default {
         type: String
     },
     watch: {
-        // 如果路由有变化，会再次执行该方法
-        // 此方法必须使用子路由才会生效
+        // 如果路由有变化，会再次执行该方法 此方法必须使用子路由才会生效
         "$route": "getArticleData",
     },
     data() {
@@ -46,19 +46,20 @@ export default {
         this.getArticleData()
     },
     methods: {
-        // 获取列表数据
+        // 根据路由参数获取不同list
         getArticleData() {
-            // 拿路由参数 根据参数获取不同table this.$route.params.type
             this.urlParam = this.$route.params.type ? { 'type': this.$route.params.type } : {}
             this.$api.getArticleData(this.urlParam).then(res => {
                 res = JSON.parse(res)
                 if (res.code == 0) {
                     this.tableData = res.data
+                } else {
+                    this.$message.error('获取列表失败')
                 }
             })
         },
         // 逐行编辑
-        handleUpdate(index, row) {
+        handleUpdate(row) {
             this.$store.commit('setArticleData', row)
             this.$router.push('/articleform')
         },
@@ -66,13 +67,30 @@ export default {
             this.$store.commit('setArticleData', {})
             this.$router.push('/articleform')
         },
-        // 逐行删除
-        handleDelete(index, row) {
-            this.$api.deleteArticleData([row._id]).then(res => {
-                res = JSON.parse(res)
-                if (res.code == 0) {
-                    this.getArticleData(this.urlParam)
-                } 
+        // 删除文章
+        deleteArticle(delParam = []) {
+            this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$api.deleteArticleData(delParam).then(res => {
+                    res = JSON.parse(res)
+                    if (res.code == 0) {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        })
+                        this.getArticleData(this.urlParam)
+                    } else {
+                        this.$message.error('删除失败!')
+                    }
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                })        
             })
         },
         // 多选框变化

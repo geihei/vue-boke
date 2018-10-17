@@ -8,10 +8,13 @@ import api from './network/index'
 import ElementUI from 'element-ui'
 import fontSize from './utils/fontSize'
 import 'element-ui/lib/theme-chalk/index.css'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 import './permission'
 
 Vue.config.productionTip = false
 
+Vue.use(mavonEditor)
 // rem单位自适应
 fontSize()
 // 引入elementui
