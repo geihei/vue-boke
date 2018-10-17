@@ -9,12 +9,12 @@
             <el-table-column label="操作" align="center" width="300">
                 <template slot-scope="scope">
                     <el-button size="mini" type="info" @click="showDetail(scope.row._id)" :disabled="isShowBtn">查看详情</el-button>
-                    <el-button size="mini" type="primary" @click="handleUpdate(scope.row)" :disabled="isShowBtn">编辑</el-button>
+                    <el-button size="mini" type="primary" @click="setArticledata(scope.row)" :disabled="isShowBtn">编辑</el-button>
                     <el-button size="mini" type="danger" @click="deleteArticle(scope.row._id)" :disabled="isShowBtn">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <el-button @click="addArticle">新增</el-button>
+        <el-button @click="setArticledata">新增</el-button>
         <el-button @click="deleteArticle(delArr)" :disabled="!isShowBtn">删除选中</el-button>
     </div>
 </template>
@@ -59,14 +59,13 @@ export default {
                 }
             })
         },
-        // 逐行编辑
-        handleUpdate(row) {
-            this.$store.commit('setArticleData', row)
-            this.$router.push('/articleform')
-        },
-        addArticle() {
-            this.$store.commit('setArticleData', {})
-            this.$router.push('/articleform')
+        // 新增或者修改
+        setArticledata(data = {}) {
+            this.$store.commit('setArticleData', data)
+            this.$router.replace({
+                name: "articleform",
+                query: { redirect: this.$router.currentRoute.fullPath }
+            })
         },
         // 删除文章
         deleteArticle(delParam = []) {

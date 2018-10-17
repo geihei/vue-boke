@@ -83,6 +83,7 @@ export default {
             ],
             time: '',
             timer: '',
+            isSave: false
         }
     },
     methods: {
@@ -90,6 +91,7 @@ export default {
             clearInterval(this.timer)
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    this.isSave = true
                     this.newDataForm.time = new Date().toLocaleDateString()
                     this.newDataForm.author = window.localStorage.username
                     if (this.newDataForm._id) {
@@ -113,10 +115,12 @@ export default {
             this.$api.updateArticleList(data).then(res => {
                 res = JSON.parse(res)
                 if (res.code == 0) {
-                    this.$message({
-                        message: res.message,
-                        type: 'success'
-                    })
+                    this.$alert(res.message, '提示', {
+                        confirmButtonText: '确定',
+                        callback: () => {
+                            this.$router.push({ path: decodeURIComponent(this.$route.query.redirect) })
+                        }
+                    });
                 } else {
                     this.$message.error(mes)
                 }
@@ -129,6 +133,7 @@ export default {
                 this.timer = setInterval(() => {
                     nowTime += 1000
                     if (nowTime - oldTime > 10000) {
+                        this.isSave = true
                         window.localStorage.articleContent = this.newDataForm.content
                         this.$notify({
                             title: '成功',
@@ -150,12 +155,32 @@ export default {
     },
     updated() {
         if (this.newDataForm.content) {
+            this.isSave = false
             // 清空timer 保存之后如果继续改动重新走timer 清空storage 重新保存
             clearInterval(this.timer)
             window.localStorage.articleContent = ''
             this.saveDraft(this.time)
         }
-    }
+    },
+    beforeRouteLeave(to, from, next) {
+        clearInterval(this.timer)
+        //next方法传true或者不传为默认历史返回，传false为不执行历史回退
+        if (!this.isSave) {
+            this.$confirm('您尚未保存, 是否离开?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '我不离开',
+                type: 'warning'
+            }).then(() => {
+                next(true)
+            }).catch(() => {
+                window.localStorage.articleContent = ''
+                this.saveDraft(this.time)
+                next(false)
+            })
+        }else {
+            next(true)
+        }
+    },
 }
 </script>
 <style lang="less" scoped>
