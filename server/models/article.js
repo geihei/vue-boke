@@ -39,6 +39,15 @@ async function queryArticleData(params) {
 }
 
 /**
+ * 根据id查询文章
+ * @param {文章id} id 
+ */
+async function queryArticleDetail(id) {
+    let query = articleModel.findById(id)
+    return query.exec()
+}
+
+/**
  * 删除文章 彻底删除
  * @param {删除项id} idList
  * 数据类型为数组 方便批量删除
@@ -76,50 +85,52 @@ module.exports = {
     articleModel,
     queryArticleData,
     deleteArticleData,
-    updateArticleList
+    updateArticleList,
+    queryArticleDetail
 }
 
-/**
- * 把 返回 mongoose model 的方法 转化成返回纯对象的方法
- * @param fn
- * @returns {function(...[*]=)}
- */
-const toObject = fn => async (...args) => {
-    const toObject = (model) => {
-        if (!model) {
-            return model
-        }
-        if (model.toObject) {
-            return toObject(model.toObject())
-        }
-        if (model instanceof Array) {
-            return model.map(m => toObject(m))
-        }
-        if (model instanceof Object) {
-            for (let i in model) {
-                if (model.hasOwnProperty(i)) {
-                    model[i] = toObject(model[i])
-                }
-            }
-            return model
-        }
-        return model
+// 暂时无用
+// /**
+//  * 把 返回 mongoose model 的方法 转化成返回纯对象的方法
+//  * @param fn
+//  * @returns {function(...[*]=)}
+//  */
+// const toObject = fn => async (...args) => {
+//     const toObject = (model) => {
+//         if (!model) {
+//             return model
+//         }
+//         if (model.toObject) {
+//             return toObject(model.toObject())
+//         }
+//         if (model instanceof Array) {
+//             return model.map(m => toObject(m))
+//         }
+//         if (model instanceof Object) {
+//             for (let i in model) {
+//                 if (model.hasOwnProperty(i)) {
+//                     model[i] = toObject(model[i])
+//                 }
+//             }
+//             return model
+//         }
+//         return model
 
-    }
+//     }
 
-    let result = fn.apply(this, args)
-    if (result.then) {
-        result = await result
-    }
-    return toObject(result)
-}
+//     let result = fn.apply(this, args)
+//     if (result.then) {
+//         result = await result
+//     }
+//     return toObject(result)
+// }
 
-// 修改所有方法, 使其返回纯对象
-for (let i in exports) {
-    if (exports.hasOwnProperty(i)) {
-        let fn = exports[i]
-        if (fn instanceof Function) {
-            exports[i] = toObject(fn)
-        }
-    }
-}
+// // 修改所有方法, 使其返回纯对象
+// for (let i in exports) {
+//     if (exports.hasOwnProperty(i)) {
+//         let fn = exports[i]
+//         if (fn instanceof Function) {
+//             exports[i] = toObject(fn)
+//         }
+//     }
+// }

@@ -16,6 +16,21 @@ const article = {
         }
         await next()
     },
+    async getArticleDetail(ctx, next) {
+        const requestQuery = ctx.request.query
+        let data
+        try {
+            data = await articleMethods.getArticleDetail(requestQuery.id)
+        } catch {
+            ctx.throw(500, '服务器错误')
+        }
+        ctx.body = {
+            code: 0,
+            message: '获取文章详情成功',
+            data
+        }
+        await next()
+    },
     async updateArticleList(ctx, next) {
         const requestBody = ctx.request.body
         if (requestBody.data._id) {

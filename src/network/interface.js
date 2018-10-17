@@ -28,6 +28,14 @@ export const getArticleData = param => {
     })
 }
 
+export const getArticleDetail = param => {
+    return axios({
+        url: '/getArticleDetail',
+        method: 'get',
+        param
+    })
+}
+
 /**
  * 更新或新增文章
  * @param {更新或者新增的文章数据} data 
@@ -58,6 +66,7 @@ export const deleteArticleData = data => {
 export default {
     login,
     getArticleData,
+    getArticleDetail,
     updateArticleList,
     deleteArticleData
 }

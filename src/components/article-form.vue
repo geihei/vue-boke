@@ -87,6 +87,7 @@ export default {
     },
     methods: {
         submitForm(formName) {
+            clearInterval(this.timer)
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.newDataForm.time = new Date().toLocaleDateString()

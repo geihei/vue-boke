@@ -5,6 +5,7 @@ import Login from '@/admin/login'
 import Home from '@/admin/home'
 import List from '@/components/list'
 import ArticleForm from '@/components/article-form'
+import ArticleDetail from '@/components/article-detail'
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ const routes = [
                 path: '/articleform',
                 name: 'articleform',
                 component: ArticleForm
+            },
+            {
+                path: '/articledetail/:id',
+                name: 'articledetail',
+                component: ArticleDetail
             }
         ]
     },

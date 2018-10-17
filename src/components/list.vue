@@ -6,9 +6,10 @@
             <el-table-column prop="time" label="创建时间" align="center" width="200"></el-table-column>
             <el-table-column prop="type" label="类别" align="center" width="200"></el-table-column>
             <el-table-column prop="author" label="作者" align="center" width="200"></el-table-column>
-            <el-table-column label="操作" align="center" width="200">
+            <el-table-column label="操作" align="center" width="300">
                 <template slot-scope="scope">
-                    <el-button size="mini" @click="handleUpdate(scope.row)" :disabled="isShowBtn">编辑</el-button>
+                    <el-button size="mini" type="info" @click="showDetail(scope.row._id)" :disabled="isShowBtn">查看详情</el-button>
+                    <el-button size="mini" type="primary" @click="handleUpdate(scope.row)" :disabled="isShowBtn">编辑</el-button>
                     <el-button size="mini" type="danger" @click="deleteArticle(scope.row._id)" :disabled="isShowBtn">删除</el-button>
                 </template>
             </el-table-column>
@@ -97,6 +98,9 @@ export default {
         handleSelectionChange(val) {
             this.delArr = val.map(element => element._id)
         },
+        showDetail(id) {
+            this.$router.push('/articledetail/' + id)
+        }
     },
     components: {
         articleForm

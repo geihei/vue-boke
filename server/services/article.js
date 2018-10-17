@@ -6,6 +6,10 @@ const articleMethods = {
         let data = await articleModel.queryArticleData(params)
         return data
     },
+    async getArticleDetail(id) {
+        let data = await articleModel.queryArticleDetail(id)
+        return data
+    },
     async deleteArticleData(idList) {
         let data = await articleModel.deleteArticleData(idList)
         return data
