@@ -21,6 +21,8 @@ npm run build
 npm run build --report
 
 # 使用以下命令快速生成.vue文件
+# 如果是添加在admin文件夹下会自动生成路由
+# 如果是添加在components文件夹下需手动添加路由
 npm run addtemplate
 
 # 本地需要有MongoDB
