@@ -11,14 +11,17 @@ npm install
 # serve with hot reload at localhost:8080 
 npm run dev
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
 # 启动server服务
 npm run server
+
+# 打包
+npm run build
+
+# 查看项目包大小
+npm run build --report
+
+# 使用以下命令快速生成.vue文件
+npm run addtemplate
 
 # 本地需要有MongoDB
 ```
