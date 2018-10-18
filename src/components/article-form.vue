@@ -149,7 +149,6 @@ export default {
         }
     },
     created() {
-        console.log(1)
         // 最好不要使用vuex传送数据 刷新丢失数据 最好选择重新发送请求 丢失数据的处理可以选择刷新前提示优化
         if (this.$store.state.editArticleData) this.newDataForm = deepClone(this.$store.state.editArticleData) // 不要使用浅拷贝 避免出现改变源数据的bug
     },

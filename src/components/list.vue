@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-table :data="tableData" :default-sort="{prop: 'time'}" ref="table" @selection-change="handleSelectionChange">
+        <el-table :data="tableData" :default-sort="{prop: 'time'}" ref="table" @selection-change="handleSelectionChange" height="578">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="title" label="文章标题"></el-table-column>
             <el-table-column prop="time" label="创建时间" align="center" width="200"></el-table-column>
@@ -14,8 +14,10 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-button @click="setArticledata">新增</el-button>
-        <el-button @click="deleteArticle(delArr)" :disabled="!isShowBtn">删除选中</el-button>
+        <div style="text-align: right">
+            <el-button @click="setArticledata" type="primary" style="margin-top: 20px">新增</el-button>
+            <el-button @click="deleteArticle(delArr)" type="danger" :disabled="!isShowBtn">删除选中</el-button>
+        </div>
     </div>
 </template>
 <script>

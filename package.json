@@ -8,7 +8,8 @@
         "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
         "start": "npm run dev",
         "build": "node build/build.js",
-        "server": "node server/app.js"
+        "server": "node server/app.js",
+        "addtemplate": "node ./build/add-template.js"
     },
     "dependencies": {
         "axios": "^0.18.0",
@@ -25,7 +26,8 @@
         "validator": "^10.7.1",
         "vue": "^2.5.2",
         "vue-router": "^3.0.1",
-        "vuex": "^3.0.1"
+        "vuex": "^3.0.1",
+        "xx-argv": "^0.1.2"
     },
     "devDependencies": {
         "autoprefixer": "^7.1.2",
@@ -44,6 +46,7 @@
         "file-loader": "^1.1.4",
         "friendly-errors-webpack-plugin": "^1.6.1",
         "html-webpack-plugin": "^2.30.1",
+        "inquirer": "^6.2.0",
         "node-notifier": "^5.1.2",
         "optimize-css-assets-webpack-plugin": "^3.2.0",
         "ora": "^1.2.0",

@@ -3,7 +3,8 @@
         <el-dropdown>
             <i class="el-icon-setting"></i>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="Logout">登出</el-dropdown-item>
+                <el-dropdown-item @click.native="toUserInfo">用户信息</el-dropdown-item>
+                <el-dropdown-item @click.native="logout">登出</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
         <span>{{username}}</span>
@@ -20,10 +21,13 @@ export default {
         this.username = this.$store.state.username
     },
     methods: {
-        Logout() {
+        logout() {
             this.$store.commit('logout')
             this.$router.push({ path: 'login' })
         },
+        toUserInfo() {
+            this.$router.push({ path: 'userinfo' })
+        }
     }
 }
 </script>

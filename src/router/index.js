@@ -6,6 +6,7 @@ import Home from '@/admin/home'
 import List from '@/components/list'
 import ArticleForm from '@/components/article-form'
 import ArticleDetail from '@/components/article-detail'
+/*newpath*/
 
 Vue.use(Router)
 
@@ -46,6 +47,7 @@ const routes = [
             }
         ]
     },
+    /*newrouter*/ /**用于添加新的路由模块 不能删除下面注释 */
 ]
 
 // 页面刷新时 重新赋值token 防止刷新是vuex中状态丢失
