@@ -53,7 +53,6 @@ export default {
         getArticleData() {
             this.urlParam = this.$route.params.type ? { 'type': this.$route.params.type } : {}
             this.$api.getArticleData(this.urlParam).then(res => {
-                res = JSON.parse(res)
                 if (res.code == 0) {
                     this.tableData = res.data
                 } else {
@@ -77,7 +76,6 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.$api.deleteArticleData(delParam).then(res => {
-                    res = JSON.parse(res)
                     if (res.code == 0) {
                         this.$message({
                             type: 'success',

@@ -112,7 +112,6 @@ export default {
         },
         updateArticleList(data, mes) {
             this.$api.updateArticleList(data).then(res => {
-                res = JSON.parse(res)
                 if (res.code == 0) {
                     this.$alert(res.message, '提示', { confirmButtonText: '确定', callback: () => {
                             this.$router.push({ path: decodeURIComponent(this.$route.query.redirect) })

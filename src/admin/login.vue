@@ -36,7 +36,6 @@ export default {
                 this.$message.error('用户名或者密码不能为空')
             } else {
                 this.$api.login(this.loginForm).then(res => {
-                    res = JSON.parse(res)
                     if (res.code == 0) {
                         this.$message({
                             message: res.message,

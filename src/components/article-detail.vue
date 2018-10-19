@@ -24,7 +24,6 @@ export default {
     },
     created() {
         this.$api.getArticleDetail({id: this.$route.params.id}).then(res => {
-            res = JSON.parse(res)
             if (res.code == 0) {
                 this.articleDetail.content = res.data.content
             } else {
