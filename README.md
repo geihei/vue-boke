@@ -41,6 +41,33 @@
 
 ```
 
+## 环境依赖和要求
+
+> node.js >= 8.0
+
+> koa2作为后端框架，熟悉koa2
+
+> MongoDB数据库 >= 3.6.3
+
+> mongoose进行数据库操作，熟悉mongoose
+
+## 使用前准备
+
+> 没有注册等功能，需手动添加
+
+``` bash
+
+# 1. 启动本地mongoDB
+mongo
+
+# 2. 创建user表并插入username和password
+db.user.insert({username: 'admin', password: 'admin'})
+
+# 3. 登录
+admin admin
+
+```
+
 ## Build Setup
 
 ``` bash
