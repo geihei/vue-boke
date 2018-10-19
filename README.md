@@ -1,6 +1,6 @@
 # vue-boke
 
-> A Vue.js project
+> vue + koa2 + axios + webpack + mongodb
 
 ## 代码目录
 
