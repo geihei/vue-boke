@@ -1,26 +1,20 @@
-/*设置单个 star
-* @param id：id
-* @param x：x坐标
-* @param y：y坐标
-* @param useCache：是否使用缓存
-*/
-function Star(id, x, y, useCache) {
-    this.id = id;
-    this.x = x;
-    this.y = y;
-    this.cacheCanvas = document.createElement("canvas");
-    this.cacheCtx = this.cacheCanvas.getContext("2d");
-    this.r = Math.floor(Math.random() * config.star_r) + 1;
-    this.cacheCtx.width = 6 * this.r;
-    this.cacheCtx.height = 6 * this.r;
-    var alpha = ( Math.floor(Math.random() * 10) + 1) / config.star_alpha;
-    this.color = "rgba(255,255,255," + alpha + ")";
-    if (useCache) {
-        this.cache();
+class Star {
+    constructor(id, x, y, useCache) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.cacheCanvas = document.createElement("canvas");
+        this.cacheCtx = this.cacheCanvas.getContext("2d");
+        this.r = Math.floor(Math.random() * config.star_r) + 1;
+        this.cacheCtx.width = 6 * this.r;
+        this.cacheCtx.height = 6 * this.r;
+        var alpha = ( Math.floor(Math.random() * 10) + 1) / config.star_alpha;
+        this.color = "rgba(255,255,255," + alpha + ")";
+        if (useCache) {
+            this.cache();
+        }
     }
-}
-Star.prototype = {
-    draw : function () {
+    draw() {
         if (!this.useCache) {
             ctx.save();
             ctx.fillStyle = this.color;
@@ -33,8 +27,8 @@ Star.prototype = {
         } else {
             ctx.drawImage(this.cacheCanvas, this.x - this.r, this.y - this.r);
         }
-    },
-    cache : function () {
+    }
+    cache() {
         this.cacheCtx.save();
         this.cacheCtx.fillStyle = this.color;
         this.cacheCtx.shadowColor = "white";
@@ -44,43 +38,44 @@ Star.prototype = {
         this.cacheCtx.closePath();
         this.cacheCtx.fill();
         this.cacheCtx.restore();
-    },
-    move : function () {
+    }
+    move() {
         this.y -= config.move_distance;
         if (this.y <= -10) {
             this.y += HEIGHT + 10;
         }
         this.draw();
-    },
-    die : function () {
+    }
+    die() {
         stars[this.id] = null;
         delete stars[this.id]
     }
-};
-function Dot(id, x, y, useCache) {
-    this.id = id;
-    this.x = x;
-    this.y = y;
-    this.r = Math.floor(Math.random() * config.dot_r)+1;
-    this.speed = config.dot_speeds;
-    this.a = config.dot_alpha;
-    this.aReduction = config.dot_aReduction;
-    this.useCache = useCache;
-    this.dotCanvas = document.createElement("canvas");
-    this.dotCtx = this.dotCanvas.getContext("2d");
-    this.dotCtx.width = 6 * this.r;
-    this.dotCtx.height = 6 * this.r;
-    this.dotCtx.a = 0.5;
-    this.color = "rgba(255,255,255," + this.a +")";
-    this.dotCtx.color = "rgba(255,255,255," + this.dotCtx.a + ")";
-    this.linkColor = "rgba(255,255,255," + this.a/4 + ")";
-    this.dir = Math.floor(Math.random()*140)+200;
-    if( useCache){
-        this.cache()
-    }
 }
-Dot.prototype = {
-    draw : function () {
+
+class Dot {
+    constructor(id, x, y, useCache) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.r = Math.floor(Math.random() * config.dot_r)+1;
+        this.speed = config.dot_speeds;
+        this.a = config.dot_alpha;
+        this.aReduction = config.dot_aReduction;
+        this.useCache = useCache;
+        this.dotCanvas = document.createElement("canvas");
+        this.dotCtx = this.dotCanvas.getContext("2d");
+        this.dotCtx.width = 6 * this.r;
+        this.dotCtx.height = 6 * this.r;
+        this.dotCtx.a = 0.5;
+        this.color = "rgba(255,255,255," + this.a +")";
+        this.dotCtx.color = "rgba(255,255,255," + this.dotCtx.a + ")";
+        this.linkColor = "rgba(255,255,255," + this.a/4 + ")";
+        this.dir = Math.floor(Math.random()*140)+200;
+        if(useCache){
+            this.cache()
+        }
+    }
+    draw() {
         if( !this.useCache){
             ctx.save();
             ctx.fillStyle = this.color;
@@ -94,8 +89,8 @@ Dot.prototype = {
         }else{
             ctx.drawImage(this.dotCanvas, this.x - this.r * 3, this.y - this.r *3);
         }
-    },
-    cache : function () {
+    }
+    cache() {
         this.dotCtx.save();
         this.dotCtx.a  -= this.aReduction;
         this.dotCtx.color = "rgba(255,255,255," + this.dotCtx.a + ")";
@@ -107,8 +102,8 @@ Dot.prototype = {
         this.dotCtx.closePath();
         this.dotCtx.fill();
         this.dotCtx.restore();
-    },
-    link : function () {
+    }
+    link() {
         if (this.id == 0) return;
         let previousDot1 = getPreviousDot(this.id, 1);
         let previousDot2 = getPreviousDot(this.id, 2);
@@ -124,8 +119,8 @@ Dot.prototype = {
         if (previousDot4 != false) ctx.lineTo(previousDot4.x, previousDot4.y);
         ctx.stroke();
         ctx.closePath();
-    },
-    move : function () {
+    }
+    move() {
         this.a -= this.aReduction;
         if(this.a <= 0 ){
             this.die();
@@ -139,12 +134,12 @@ Dot.prototype = {
         this.y = this.y + Math.sin(degToRad(this.dir)) * this.speed;
         this.draw();
         this.link();
-    },
-    die : function () {
+    }
+    die() {
         dots[this.id] = null;
         delete dots[this.id];
     }
-};
+}
 /*
 * @let star_r：star半径系数，系数越大，半径越大
 * @let star_alpha：生成star的透明度，star_alpha越大，透明度越低
@@ -197,7 +192,7 @@ window.onmousemove = function (e) {
 function drawIfMouseMoving() {
     if (!mouseMoving) return;//鼠标没有移动，返回
     if (dots.length == 0) {//判断是不是第一个dot
-        dots[0] = new Dot(0, mouseX, mouseY,true);
+        dots[0] = new Dot(0, mouseX, mouseY, true);
         dots[0].draw();
         return;
     }
@@ -266,7 +261,7 @@ export default function start(canvas1, ctx1) {
     ctx.shadowColor = "white";
     //循环初始化所有的Star对象
     for (let i = 0; i < config.initStarsPopulation; i++) {
-        stars[i] = new Star(i, Math.floor(Math.random()*WIDTH), Math.floor(Math.random()*HEIGHT),true);
+        stars[i] = new Star(i, Math.floor(Math.random()*WIDTH), Math.floor(Math.random()*HEIGHT), true);
     }
     ctx.shadowBlur = 0;
     //初始化dot和star

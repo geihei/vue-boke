@@ -114,9 +114,7 @@ export default {
             this.$api.updateArticleList(data).then(res => {
                 res = JSON.parse(res)
                 if (res.code == 0) {
-                    this.$alert(res.message, '提示', {
-                        confirmButtonText: '确定',
-                        callback: () => {
+                    this.$alert(res.message, '提示', { confirmButtonText: '确定', callback: () => {
                             this.$router.push({ path: decodeURIComponent(this.$route.query.redirect) })
                         }
                     });
@@ -157,6 +155,7 @@ export default {
             this.isSave = false
             // 清空timer 保存之后如果继续改动重新走timer 清空storage 重新保存
             clearInterval(this.timer)
+            this.time = new Date().getTime()
             window.localStorage.articleContent = ''
             this.saveDraft(this.time)
         }

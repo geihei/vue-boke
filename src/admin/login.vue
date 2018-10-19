@@ -9,7 +9,7 @@
     </section>
 </template>
 <script>
-import start from '../utils/canvas-bg'
+import start from '../utils/canvas-bg-es6'
 
 export default {
     data() {
