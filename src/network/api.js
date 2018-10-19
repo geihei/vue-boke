@@ -29,7 +29,7 @@ export default function $axios(options) {
                     config.headers.Authorization = `Bearer ${store.state.token}`
                 } else {
                     // token不存在 重定向到登录页面
-                    router.replace({path: 'login'})
+                    router.push({path: 'login'})
                 }
                 // 根据请求方法，序列化传来的参数，根据后端需求是否序列化
                 if (config.method === 'post') {
@@ -153,6 +153,7 @@ export default function $axios(options) {
                     }
                 }
                 // console.error(err)
+                console.log(Promise.reject(err))
                 return Promise.reject(err) // 返回接口返回的错误信息
             }
         )

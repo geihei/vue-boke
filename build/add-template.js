@@ -34,6 +34,7 @@ function start(argv) {
     const templateNameUpper = argv.template.toUpperCase()
     fs.access(templatePath + '/' + templateName + '.vue', function(err) {
         if (err) {
+            // 此方式是用流的方式边读边写 速度较快 还可以通过readFile再writeFile的形式写文件
             fs.createReadStream('./sketch/template.vue').pipe(fs.createWriteStream(templatePath + '/' + templateName + '.vue'))
             if (argv.path === 'admin') {
                 fs.readFile(process.cwd() + '/src/router/index.js', 'utf8', function (err, file) {

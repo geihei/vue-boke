@@ -17,7 +17,7 @@ module.exports = async (ctx, next) => {
 	if(token && decoded.exp <= Date.now() / 1000) {
 		ctx.body = {
             body: 401,
-            message:'token 已过期'
+            message: 'token 已过期'
         };
     }
     // 必须要有await 
